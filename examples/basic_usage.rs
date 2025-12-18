@@ -5,7 +5,7 @@
 use std::collections::HashMap;
 
 use rstar::{AABB, primitives::Rectangle};
-use rstared::{Insert, RTreed};
+use rstared::{Insert, RTreed, Remove};
 
 fn main() {
     // A hashmap of 2D rectangles will be the underlying collection.
@@ -28,6 +28,19 @@ fn main() {
             .locate_in_envelope(&AABB::from_corners((0, 0), (2, 2)))
             .count(),
         2
+    );
+
+    // Now remove one of the rectangles, recording this in the R-tree.
+    rtreed_hashmap.remove(&1);
+
+    // Make the same query to the R-tree as before.
+    // Only one rectangle is now present.
+    assert_eq!(
+        rtreed_hashmap
+            .rtree()
+            .locate_in_envelope(&AABB::from_corners((0, 0), (2, 2)))
+            .count(),
+        1
     );
 }
 
