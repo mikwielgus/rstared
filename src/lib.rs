@@ -17,7 +17,7 @@ mod maplike;
 
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
-use crate::maplike::{Get, Insert, Keyed, Map, Push, Remove};
+pub use crate::maplike::{Get, Insert, Keyed, Map, Push, Remove};
 
 pub struct RTreed<K, V: RTreeObject, C> {
     collection: C,
