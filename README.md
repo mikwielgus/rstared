@@ -4,9 +4,9 @@ SPDX-FileCopyrightText: 2025 rstared contributors
 SPDX-License-Identifier: MIT OR Apache-2.0
 -->
 
-[![CI Status](https://ci.codeberg.org/undoredo/badge.svg)](https://ci.codeberg.org/repos/15785)
-[![Docs](https://docs.rs/undoredo/badge.svg)](https://docs.rs/rstared/)
-[![Crates.io](https://img.shields.io/crates/v/undoredo.svg)](https://crates.io/crates/rstared)
+[![CI Status](https://ci.codeberg.org/api/badges/15785/status.svg)](https://ci.codeberg.org/repos/15785)
+[![Docs](https://docs.rs/rstared/badge.svg)](https://docs.rs/rstared/)
+[![Crates.io](https://img.shields.io/crates/v/rstared.svg)](https://crates.io/crates/rstared)
 [![MIT OR Apache 2.0](https://img.shields.io/crates/l/rstared.svg)](#licence)
 
 # rstared
@@ -30,7 +30,7 @@ following collections:
 ## Usage
 
 Add `rstared` as a dependency to your `Cargo.toml` together with the features
-gating the collections that you are going to use. For example, to use `rstared`
+that gate the collections you are going to use. For example, to use `rstared`
 with `stable_vec::StableVec` and `thunderdome::Arena`, write
 
 ```toml
