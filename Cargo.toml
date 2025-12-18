@@ -11,18 +11,27 @@ repository = "https://codeberg.org/topola/undoredo"
 documentation = "https://docs.rs/undoredo"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
-keywords = ["undo", "redo", "no_std"]
-categories = ["data-structures", "gui", "no-std"]
+keywords = ["rtree", "no_std"]
+categories = ["data-structures", "no-std"]
 edition = "2024"
 
+[badges]
+maintenance = { status = "actively-developed" }
+
 [features]
-default = ["std"]
+default = ["std", "rstar"]
 std = []
+rstar = []
 
 [dependencies]
 rstar = "^0.12"
 stable-vec = { version = "^0.4", optional = true }
 thunderdome = { version = "^0.6", optional = true }
+
+[dev-dependencies]
+stable-vec = "^0.4"
+thunderdome = "^0.6"
+rand = "^0.9"
 
 [package.metadata.docs.rs]
 cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
