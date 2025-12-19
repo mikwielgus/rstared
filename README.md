@@ -11,7 +11,7 @@ SPDX-License-Identifier: MIT OR Apache-2.0
 
 # rstared
 
-`rstared::RTree` is a simple
+`rstared::RTreed` is a simple
 [decorator](https://en.wikipedia.org/wiki/Decorator_pattern)
 that adds a passively listening R-tree,
 [`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to the
