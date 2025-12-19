@@ -94,8 +94,6 @@ impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> Push<K> for RTreed<
 
 #[cfg(test)]
 mod tests {
-    use std::vec;
-
     use rand::Rng;
     use rstar::{AABB, primitives::Rectangle};
 
@@ -129,7 +127,7 @@ mod tests {
     ) {
         let mut rtreed: RTreed<K, Rectangle<(i32, i32)>, C> = RTreed::new(collection);
         let mut rng = rand::rng();
-        let mut keys = vec![];
+        let mut keys = alloc::vec![];
 
         for _ in 0..100 {
             let x = rng.random_range(0..=90);
