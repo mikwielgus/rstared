@@ -95,7 +95,7 @@ instead automatically generates and returns by itself. This operation is called
 "pushing".
 
 If a supported type has a push interface, you can use it through `RTreed` by
-calling [`.push()`], like this:
+calling `.push()`, like this:
 
 ```rust-ignore
 rtreed.push('A');
