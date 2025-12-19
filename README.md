@@ -28,6 +28,10 @@ following collections:
   gated by the `thunderdome` feature (example usage:
   [examples/thunderdome.rs](./examples/thunderdome.rs)).
 
+
+This library is `no_std`-compatible and has no mandatory third-party
+dependencies except for [`alloc`](https://doc.rust-lang.org/alloc/).
+
 ## Usage
 
 ### Basic usage
@@ -93,7 +97,7 @@ fn main() {
 Some data structures with map semantics also provide a special type of insertion
 where a value is inserted without specifying a key, which the structure
 instead automatically generates and returns by itself. This operation is called
-"pushing".
+*pushing*.
 
 If a supported type has a push interface, you can use it through `RTreed` by
 calling `.push()`, like this:
