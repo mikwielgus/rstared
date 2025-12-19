@@ -35,3 +35,8 @@ rand = "^0.9"
 
 [package.metadata.docs.rs]
 cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
+
+[[example]]
+name = "basic_usage"
+required-features = ["std"]
+doc-scrape-examples = true
