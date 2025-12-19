@@ -110,17 +110,6 @@ We welcome issues and pull requests from anyone both to our canonical
 [repository](https://codeberg.org/topola/rstared) on Codeberg and to our GitHub
 [mirror](https://github.com/mikwielgus/rstared).
 
-**NOTE:** This repository currently contains a Git submodule:
-`src/maplike`, which we currently use to share functionality with the
-[`undoredo`](https://docs.rs/undoredo/) crate to avoid creating another crate
-for now. After `git clone`, remember to run
-
-```bash
-git submodule update --init
-```
-
-in the cloned directory.
-
 ## Licence
 
 `undoredo` is dual-licensed as under either of

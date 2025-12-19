@@ -14,11 +14,9 @@ extern crate std;
 // No feature for `alloc` because it would be always enabled anyway.
 extern crate alloc;
 
-mod maplike;
-
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
-pub use crate::maplike::{Get, Insert, Keyed, Map, Push, Remove};
+pub use maplike::{Get, Insert, Keyed, Map, Push, Remove};
 
 pub struct RTreed<K, V: RTreeObject, C> {
     collection: C,
