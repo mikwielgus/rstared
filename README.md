@@ -12,8 +12,9 @@ SPDX-License-Identifier: MIT OR Apache-2.0
 # rstared
 
 `rstared::RTree` is a simple
-[decorator](https://en.wikipedia.org/wiki/Decorator_pattern) that adds
-[`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html) to the
+[decorator](https://en.wikipedia.org/wiki/Decorator_pattern)
+that adds a passively listening R-tree,
+[`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to the
 following collections:
 
 - [`HashMap`](https://doc.rust-lang.org/std/collections/struct.HashMap.html), gated by the `std` feature (enabled by default);
@@ -21,10 +22,10 @@ following collections:
 - [`BTreeMap`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html), not feature-gated;
 - [`BTreeSet`](https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html), not feature-gated;
 - [`stable_vec::StableVec`](https://docs.rs/stable-vec/latest/stable_vec/),
-  gated by the `stable-vec` feature; (example usage:
-  [examples/stable_vec.rs](./examples/stable_vec.rs)),
+  gated by the `stable-vec` feature (example usage:
+  [examples/stable_vec.rs](./examples/stable_vec.rs));
 - [`thunderdome::Arena`](https://docs.rs/thunderdome/latest/thunderdome/),
-  gated by the `thunderdome` feature. (example usage:
+  gated by the `thunderdome` feature (example usage:
   [examples/thunderdome.rs](./examples/thunderdome.rs)).
 
 ## Usage
