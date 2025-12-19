@@ -19,7 +19,7 @@ edition = "2024"
 maintenance = { status = "actively-developed" }
 
 [features]
-default = ["std", "rstar"]
+default = ["std", "rstar", "maplike/rstar"]
 std = []
 rstar = []
 stable-vec = ["maplike/stable-vec"]
