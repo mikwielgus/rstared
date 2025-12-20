@@ -12,7 +12,7 @@ documentation = "https://docs.rs/rstared"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 keywords = ["rtree", "no_std"]
-categories = ["data-structures", "no-std"]
+categories = ["data-structures", "no-std", "rust-patterns"]
 edition = "2024"
 
 [badges]
