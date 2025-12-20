@@ -35,7 +35,7 @@ thunderdome = "0.6"
 rand = "0.9"
 
 [package.metadata.docs.rs]
-cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
+cargo-args = ["--all-features", "-Zunstable-options", "-Zrustdoc-scrape-examples"]
 
 [[example]]
 name = "basic_usage"
