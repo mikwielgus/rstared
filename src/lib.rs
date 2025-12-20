@@ -42,6 +42,12 @@ impl<K, V: RTreeObject, C> RTreed<K, V, C> {
     }
 }
 
+impl<K, V: RTreeObject, C: Default> Default for RTreed<K, V, C> {
+    fn default() -> Self {
+        RTreed::new(C::default())
+    }
+}
+
 impl<K, V: RTreeObject, C> Map for RTreed<K, V, C> {
     type Item = V;
 }
