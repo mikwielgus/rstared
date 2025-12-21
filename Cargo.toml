@@ -4,7 +4,7 @@
 
 [package]
 name = "rstared"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["Mikolaj Wielgus <wielgusmikolaj@gmail.com>"]
 description = "Simple decorator that adds rstar::RTree to collections such as HashMap, BTreeMap, StableVec, thunderdome::Arena."
 repository = "https://codeberg.org/topola/rstared"
