@@ -26,7 +26,7 @@ stable-vec = ["maplike/stable-vec"]
 thunderdome = ["maplike/thunderdome"]
 
 [dependencies]
-maplike = "0.2"
+maplike = "0.3"
 rstar = "0.12"
 
 [dev-dependencies]
