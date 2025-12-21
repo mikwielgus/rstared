@@ -4,7 +4,7 @@
 
 [package]
 name = "rstared"
-version = "0.2.4"
+version = "0.3.0"
 authors = ["Mikolaj Wielgus <wielgusmikolaj@gmail.com>"]
 description = "Simple decorator that adds rstar::RTree to collections such as HashMap, BTreeMap, StableVec, thunderdome::Arena."
 repository = "https://codeberg.org/topola/rstared"
@@ -12,7 +12,7 @@ documentation = "https://docs.rs/rstared"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 keywords = ["rtree", "no_std"]
-categories = ["data-structures", "no-std", "rust-patterns"]
+categories = ["data-structures", "gui", "no-std", "rust-patterns"]
 edition = "2024"
 
 [badges]
