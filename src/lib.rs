@@ -18,6 +18,7 @@ use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
 pub use maplike::{Get, Insert, Keyed, Map, Push, Remove};
 
+#[derive(Clone, Debug)]
 pub struct RTreed<K, V: RTreeObject, C> {
     collection: C,
     rtree: RTree<GeomWithData<V, K>>,
