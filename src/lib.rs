@@ -17,7 +17,7 @@ extern crate alloc;
 use maplike::IntoIter;
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
-pub use maplike::{Get, Insert, Keyed, Map, Push, Remove};
+pub use maplike::{Get, Insert, Keyed, Map, Push, Remove, StableRemove};
 
 #[derive(Clone, Debug)]
 pub struct RTreed<K, V: RTreeObject, C> {
@@ -74,8 +74,8 @@ impl<K: Clone, V: Clone + RTreeObject, C: Get<K, Item = V> + Insert<K>> Insert<K
     }
 }
 
-impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: Remove<K, Item = V>> Remove<K>
-    for RTreed<K, V, C>
+impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
+    Remove<K> for RTreed<K, V, C>
 {
     #[inline(always)]
     fn remove(&mut self, key: &K) -> Option<V> {
@@ -85,6 +85,11 @@ impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: Remove<K, Item
 
         Some(value)
     }
+}
+
+impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
+    StableRemove<K> for RTreed<K, V, C>
+{
 }
 
 impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> Push<K> for RTreed<K, V, C> {
@@ -135,7 +140,7 @@ mod tests {
     /// "AAR" stands for "axis-aligned rectangle".
     fn test_push_and_remove_random_aars<
         K: Clone + PartialEq,
-        C: Get<K, Item = Rectangle<(i32, i32)>> + Push<K> + Remove<K>,
+        C: Get<K, Item = Rectangle<(i32, i32)>> + Push<K> + StableRemove<K>,
     >(
         collection: C,
     ) {
