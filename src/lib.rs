@@ -32,9 +32,7 @@ impl<K, V: RTreeObject, C> RTreed<K, V, C> {
             rtree: RTree::new(),
         }
     }
-}
 
-impl<K, V: RTreeObject, C> RTreed<K, V, C> {
     pub fn collection(&self) -> &C {
         &self.collection
     }
