@@ -52,7 +52,7 @@ Following is a basic usage example taken from
 use std::collections::HashMap;
 
 use rstar::{AABB, primitives::Rectangle};
-use rstared::{Insert, RTreed, Remove};
+use rstared::RTreed;
 
 fn main() {
     // A hashmap of 2D rectangles will be the underlying collection.
