@@ -17,16 +17,18 @@ passively listening R-tree,
 [`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to the
 following collections:
 
-- [`HashMap`](https://doc.rust-lang.org/std/collections/struct.HashMap.html), gated by the `std` feature (enabled by default);
-- [`HashSet`](https://doc.rust-lang.org/stable/std/collections/struct.HashSet.html), gated by the `std` feature (enabled by default);
-- [`BTreeMap`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html), not feature-gated;
-- [`BTreeSet`](https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html), not feature-gated;
+- [`HashMap`](https://doc.rust-lang.org/std/collections/struct.HashMap.html),
+  gated by the `std` feature (enabled by default);
+- [`HashSet`](https://doc.rust-lang.org/stable/std/collections/struct.HashSet.html),
+  gated by the `std` feature (enabled by default);
+- [`BTreeMap`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html),
+  not feature-gated;
+- [`BTreeSet`](https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html),
+  not feature-gated;
 - [`stable_vec::StableVec`](https://docs.rs/stable-vec/latest/stable_vec/),
-  gated by the `stable-vec` feature (example usage:
-  [examples/stable_vec.rs](./examples/stable_vec.rs));
+  gated by the `stable-vec` feature;
 - [`thunderdome::Arena`](https://docs.rs/thunderdome/latest/thunderdome/),
-  gated by the `thunderdome` feature (example usage:
-  [examples/thunderdome.rs](./examples/thunderdome.rs)).
+  gated by the `thunderdome` feature.
 
 
 This library is `no_std`-compatible and has no mandatory third-party
@@ -45,8 +47,8 @@ with `stable_vec::StableVec` and `thunderdome::Arena`, write
 rstared = { version = "0.4", features = ["stable-vec", "thunderdome"] }
 ```
 
-Following is a basic usage example taken from
-[examples/basic_usage.rs](./examples/basic_usage.rs):
+Following is a basic usage example
+([examples/basic_usage.rs](https://codeberg.org/topola/rstared/src/branch/develop/examples/basic_usage.rs)):
 
 ```rust
 use std::collections::HashMap;
