@@ -116,6 +116,10 @@ We welcome issues and pull requests from anyone both to our canonical
 [repository](https://codeberg.org/topola/rstared) on Codeberg and to our GitHub
 [mirror](https://github.com/mikwielgus/rstared).
 
+If you would like `rstared` to work with a new collection type, please send
+a contribution to [`maplike`](https://docs.rs/maplike/latest/maplike/), which
+provides and implements the traits `rstared` relies on.
+
 ## Licence
 
 `undoredo` is dual-licensed as under either of
