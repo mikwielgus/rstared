@@ -202,8 +202,7 @@ mod tests {
         use stable_vec::StableVec;
         test_push_and_remove_random_aars::<StableVec<Rectangle<(i32, i32)>>>(StableVec::<
             Rectangle<(i32, i32)>,
-        >::new(
-        ));
+        >::new());
     }
 
     #[cfg(feature = "thunderdome")]
@@ -217,11 +216,14 @@ mod tests {
 
     /// "AAR" stands for "axis-aligned rectangle".
     fn test_push_and_remove_random_aars<
-        C: Keyed + Map<Item = Rectangle<(i32, i32)>> + Get<C::Key> + Push<C::Key> + StableRemove<C::Key>,
+        C: Keyed
+            + Map<Item = Rectangle<(i32, i32)>>
+            + Get<C::Key>
+            + Push<C::Key>
+            + StableRemove<C::Key>,
     >(
         collection: C,
-    )
-    where
+    ) where
         C::Key: Clone + PartialEq,
     {
         let mut rtreed: RTreed<C> = RTreed::new(collection);
