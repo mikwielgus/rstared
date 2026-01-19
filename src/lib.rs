@@ -63,6 +63,13 @@ impl<K, V: RTreeObject, C> Keyed for RTreed<K, V, C> {
 impl<K, V: RTreeObject, C: Get<K, Item = V>> Get<K> for RTreed<K, V, C> {
     #[inline]
     fn get(&self, key: &K) -> Option<&V> {
+        self.get(key)
+    }
+}
+
+impl<K, V: RTreeObject, C: Get<K, Item = V>> RTreed<K, V, C> {
+    #[inline]
+    pub fn get(&self, key: &K) -> Option<&V> {
         self.collection.get(key)
     }
 }
@@ -95,6 +102,11 @@ impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K
 }
 
 impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
+    StableRemove<K> for RTreed<K, V, C>
+{
+}
+
+impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
     RTreed<K, V, C>
 {
     #[inline]
@@ -105,11 +117,6 @@ impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K
 
         Some(value)
     }
-}
-
-impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
-    StableRemove<K> for RTreed<K, V, C>
-{
 }
 
 impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> Push<K> for RTreed<K, V, C> {
