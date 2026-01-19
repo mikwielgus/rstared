@@ -20,12 +20,18 @@ use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 pub use maplike::{Get, Insert, Keyed, Map, Push, Remove, StableRemove};
 
 #[derive(Clone, Debug)]
-pub struct RTreed<K, V: RTreeObject, C> {
+pub struct RTreed<C: Keyed + Map>
+where
+    C::Item: RTreeObject,
+{
     collection: C,
-    rtree: RTree<GeomWithData<V, K>>,
+    rtree: RTree<GeomWithData<C::Item, C::Key>>,
 }
 
-impl<K, V: RTreeObject, C> RTreed<K, V, C> {
+impl<C: Keyed + Map> RTreed<C>
+where
+    C::Item: RTreeObject,
+{
     #[inline]
     pub fn new(collection: C) -> Self {
         Self {
@@ -40,77 +46,104 @@ impl<K, V: RTreeObject, C> RTreed<K, V, C> {
     }
 
     #[inline]
-    pub fn rtree(&self) -> &RTree<GeomWithData<V, K>> {
+    pub fn rtree(&self) -> &RTree<GeomWithData<C::Item, C::Key>> {
         &self.rtree
     }
 }
 
-impl<K, V: RTreeObject, C: Default> Default for RTreed<K, V, C> {
+impl<C: Keyed + Map + Default> Default for RTreed<C>
+where
+    C::Item: RTreeObject,
+{
     #[inline]
     fn default() -> Self {
         RTreed::new(C::default())
     }
 }
 
-impl<K, V: RTreeObject, C> Map for RTreed<K, V, C> {
-    type Item = V;
+impl<C: Keyed + Map> Map for RTreed<C>
+where
+    C::Item: RTreeObject,
+{
+    type Item = C::Item;
 }
 
-impl<K, V: RTreeObject, C> Keyed for RTreed<K, V, C> {
-    type Key = K;
+impl<C: Keyed + Map> Keyed for RTreed<C>
+where
+    C::Item: RTreeObject,
+{
+    type Key = C::Key;
 }
 
-impl<K, V: RTreeObject, C: Get<K, Item = V>> Get<K> for RTreed<K, V, C> {
+impl<C: Keyed + Map + Get<C::Key>> Get<C::Key> for RTreed<C>
+where
+    C::Item: RTreeObject,
+{
     #[inline]
-    fn get(&self, key: &K) -> Option<&V> {
+    fn get(&self, key: &C::Key) -> Option<&C::Item> {
         self.get(key)
     }
 }
 
-impl<K, V: RTreeObject, C: Get<K, Item = V>> RTreed<K, V, C> {
+impl<C: Keyed + Map + Get<C::Key>> RTreed<C>
+where
+    C::Item: RTreeObject,
+{
     #[inline]
-    pub fn get(&self, key: &K) -> Option<&V> {
+    pub fn get(&self, key: &C::Key) -> Option<&C::Item> {
         self.collection.get(key)
     }
 }
 
-impl<K: Clone, V: Clone + RTreeObject, C: Get<K, Item = V> + Insert<K>> Insert<K>
-    for RTreed<K, V, C>
+impl<C: Keyed + Map + Get<C::Key> + Insert<C::Key>> Insert<C::Key> for RTreed<C>
+where
+    C::Key: Clone,
+    C::Item: Clone + RTreeObject,
 {
     #[inline]
-    fn insert(&mut self, key: K, value: V) {
+    fn insert(&mut self, key: C::Key, value: C::Item) {
         self.insert(key, value);
     }
 }
 
-impl<K: Clone, V: Clone + RTreeObject, C: Get<K, Item = V> + Insert<K>> RTreed<K, V, C> {
+impl<C: Keyed + Map + Get<C::Key> + Insert<C::Key>> RTreed<C>
+where
+    C::Key: Clone,
+    C::Item: Clone + RTreeObject,
+{
     #[inline]
-    pub fn insert(&mut self, key: K, value: V) {
+    pub fn insert(&mut self, key: C::Key, value: C::Item) {
         self.rtree
             .insert(GeomWithData::new(value.clone(), key.clone()));
         self.collection.insert(key, value);
     }
 }
 
-impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
-    Remove<K> for RTreed<K, V, C>
+impl<C: Keyed + Map + StableRemove<C::Key>> Remove<C::Key> for RTreed<C>
+where
+    C::Key: Clone + PartialEq,
+    C::Item: Clone + PartialEq + RTreeObject,
 {
     #[inline]
-    fn remove(&mut self, key: &K) -> Option<V> {
+    fn remove(&mut self, key: &C::Key) -> Option<C::Item> {
         self.remove(key)
     }
 }
 
-impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
-    StableRemove<K> for RTreed<K, V, C>
+impl<C: Keyed + Map + StableRemove<C::Key>> StableRemove<C::Key> for RTreed<C>
+where
+    C::Key: Clone + PartialEq,
+    C::Item: Clone + PartialEq + RTreeObject,
 {
 }
 
-impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
-    RTreed<K, V, C>
+impl<C: Keyed + Map + StableRemove<C::Key>> RTreed<C>
+where
+    C::Key: Clone + PartialEq,
+    C::Item: Clone + PartialEq + RTreeObject,
 {
     #[inline]
-    pub fn remove(&mut self, key: &K) -> Option<V> {
+    pub fn remove(&mut self, key: &C::Key) -> Option<C::Item> {
         let value = self.collection.remove(&key.clone())?;
         self.rtree
             .remove(&GeomWithData::new(value.clone(), key.clone()));
@@ -119,16 +152,24 @@ impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K
     }
 }
 
-impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> Push<K> for RTreed<K, V, C> {
+impl<C: Keyed + Map + Push<C::Key>> Push<C::Key> for RTreed<C>
+where
+    C::Key: Clone,
+    C::Item: Clone + RTreeObject,
+{
     #[inline]
-    fn push(&mut self, value: V) -> K {
+    fn push(&mut self, value: C::Item) -> C::Key {
         self.push(value)
     }
 }
 
-impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> RTreed<K, V, C> {
+impl<C: Keyed + Map + Push<C::Key>> RTreed<C>
+where
+    C::Key: Clone,
+    C::Item: Clone + RTreeObject,
+{
     #[inline]
-    pub fn push(&mut self, value: V) -> K {
+    pub fn push(&mut self, value: C::Item) -> C::Key {
         let key = self.collection.push(value.clone());
         self.rtree.insert(GeomWithData::new(value, key.clone()));
 
@@ -136,7 +177,10 @@ impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> RTreed<K, V, C> {
     }
 }
 
-impl<K, V: RTreeObject, C: IntoIter<K, Item = V>> IntoIter<K> for RTreed<K, V, C> {
+impl<C: Keyed + Map + IntoIter<<C as Keyed>::Key>> IntoIter<<C as Keyed>::Key> for RTreed<C>
+where
+    C::Item: RTreeObject,
+{
     type IntoIter = C::IntoIter;
 
     #[inline]
@@ -156,7 +200,7 @@ mod tests {
     #[test]
     fn test_push_and_remove_random_aars_in_stable_vec() {
         use stable_vec::StableVec;
-        test_push_and_remove_random_aars::<usize, StableVec<Rectangle<(i32, i32)>>>(StableVec::<
+        test_push_and_remove_random_aars::<StableVec<Rectangle<(i32, i32)>>>(StableVec::<
             Rectangle<(i32, i32)>,
         >::new(
         ));
@@ -165,20 +209,22 @@ mod tests {
     #[cfg(feature = "thunderdome")]
     #[test]
     fn test_push_and_remove_random_aars_in_thunderdome() {
-        use thunderdome::{Arena, Index};
-        test_push_and_remove_random_aars::<Index, Arena<Rectangle<(i32, i32)>>>(Arena::<
+        use thunderdome::Arena;
+        test_push_and_remove_random_aars::<Arena<Rectangle<(i32, i32)>>>(Arena::<
             Rectangle<(i32, i32)>,
         >::new());
     }
 
     /// "AAR" stands for "axis-aligned rectangle".
     fn test_push_and_remove_random_aars<
-        K: Clone + PartialEq,
-        C: Get<K, Item = Rectangle<(i32, i32)>> + Push<K> + StableRemove<K>,
+        C: Keyed + Map<Item = Rectangle<(i32, i32)>> + Get<C::Key> + Push<C::Key> + StableRemove<C::Key>,
     >(
         collection: C,
-    ) {
-        let mut rtreed: RTreed<K, Rectangle<(i32, i32)>, C> = RTreed::new(collection);
+    )
+    where
+        C::Key: Clone + PartialEq,
+    {
+        let mut rtreed: RTreed<C> = RTreed::new(collection);
         let mut rng = rand::rng();
         let mut keys = alloc::vec![];
 
