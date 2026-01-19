@@ -26,6 +26,7 @@ pub struct RTreed<K, V: RTreeObject, C> {
 }
 
 impl<K, V: RTreeObject, C> RTreed<K, V, C> {
+    #[inline]
     pub fn new(collection: C) -> Self {
         Self {
             collection,
@@ -33,16 +34,19 @@ impl<K, V: RTreeObject, C> RTreed<K, V, C> {
         }
     }
 
+    #[inline]
     pub fn collection(&self) -> &C {
         &self.collection
     }
 
+    #[inline]
     pub fn rtree(&self) -> &RTree<GeomWithData<V, K>> {
         &self.rtree
     }
 }
 
 impl<K, V: RTreeObject, C: Default> Default for RTreed<K, V, C> {
+    #[inline]
     fn default() -> Self {
         RTreed::new(C::default())
     }
@@ -57,7 +61,7 @@ impl<K, V: RTreeObject, C> Keyed for RTreed<K, V, C> {
 }
 
 impl<K, V: RTreeObject, C: Get<K, Item = V>> Get<K> for RTreed<K, V, C> {
-    #[inline(always)]
+    #[inline]
     fn get(&self, key: &K) -> Option<&V> {
         self.collection.get(key)
     }
@@ -66,14 +70,14 @@ impl<K, V: RTreeObject, C: Get<K, Item = V>> Get<K> for RTreed<K, V, C> {
 impl<K: Clone, V: Clone + RTreeObject, C: Get<K, Item = V> + Insert<K>> Insert<K>
     for RTreed<K, V, C>
 {
-    #[inline(always)]
+    #[inline]
     fn insert(&mut self, key: K, value: V) {
         self.insert(key, value);
     }
 }
 
 impl<K: Clone, V: Clone + RTreeObject, C: Get<K, Item = V> + Insert<K>> RTreed<K, V, C> {
-    #[inline(always)]
+    #[inline]
     pub fn insert(&mut self, key: K, value: V) {
         self.rtree
             .insert(GeomWithData::new(value.clone(), key.clone()));
@@ -84,7 +88,7 @@ impl<K: Clone, V: Clone + RTreeObject, C: Get<K, Item = V> + Insert<K>> RTreed<K
 impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
     Remove<K> for RTreed<K, V, C>
 {
-    #[inline(always)]
+    #[inline]
     fn remove(&mut self, key: &K) -> Option<V> {
         self.remove(key)
     }
@@ -93,7 +97,7 @@ impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K
 impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K, Item = V>>
     RTreed<K, V, C>
 {
-    #[inline(always)]
+    #[inline]
     pub fn remove(&mut self, key: &K) -> Option<V> {
         let value = self.collection.remove(&key.clone())?;
         self.rtree
@@ -109,14 +113,14 @@ impl<K: Clone + PartialEq, V: Clone + PartialEq + RTreeObject, C: StableRemove<K
 }
 
 impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> Push<K> for RTreed<K, V, C> {
-    #[inline(always)]
+    #[inline]
     fn push(&mut self, value: V) -> K {
         self.push(value)
     }
 }
 
 impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> RTreed<K, V, C> {
-    #[inline(always)]
+    #[inline]
     pub fn push(&mut self, value: V) -> K {
         let key = self.collection.push(value.clone());
         self.rtree.insert(GeomWithData::new(value, key.clone()));
@@ -128,7 +132,7 @@ impl<K: Clone, V: Clone + RTreeObject, C: Push<K, Item = V>> RTreed<K, V, C> {
 impl<K, V: RTreeObject, C: IntoIter<K, Item = V>> IntoIter<K> for RTreed<K, V, C> {
     type IntoIter = C::IntoIter;
 
-    #[inline(always)]
+    #[inline]
     fn into_iter(self) -> C::IntoIter {
         self.collection.into_iter()
     }
