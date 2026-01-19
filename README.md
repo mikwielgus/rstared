@@ -61,7 +61,7 @@ fn main() {
     let rect_hashmap: HashMap<i32, Rectangle<(i32, i32)>> = HashMap::new();
 
     // Wrap `RTreed` around the hashmap.
-    let mut rtreed = RTreed::<HashMap<i32, Rectangle<(i32, i32)>>>::new(rect_hashmap);
+    let mut rtreed = RTreed::new(rect_hashmap);
 
     // Insert two rectangles, recording them in the R-tree.
     rtreed.insert(1, Rectangle::from_corners((0, 0), (1, 1)));
