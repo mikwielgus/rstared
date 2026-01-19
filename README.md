@@ -44,7 +44,7 @@ with `stable_vec::StableVec` and `thunderdome::Arena`, write
 
 ```toml
 [dependencies]
-rstared = { version = "0.4", features = ["stable-vec", "thunderdome"] }
+rstared = { version = "0.5", features = ["stable-vec", "thunderdome"] }
 ```
 
 Following is a basic usage example
