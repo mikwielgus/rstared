@@ -196,7 +196,8 @@ mod tests {
         use stable_vec::StableVec;
         test_push_and_remove_random_aars::<usize, StableVec<Rectangle<(i32, i32)>>>(StableVec::<
             Rectangle<(i32, i32)>,
-        >::new());
+        >::new(
+        ));
     }
 
     #[cfg(feature = "thunderdome")]
