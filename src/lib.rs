@@ -14,7 +14,7 @@ extern crate std;
 // No feature for `alloc` because it would be always enabled anyway.
 extern crate alloc;
 
-use maplike::IntoIter;
+use maplike::{IntoIter, Set};
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
 pub use maplike::{Get, Insert, KeyedCollection, Push, Remove, StableRemove};
@@ -110,6 +110,32 @@ where
         self.rtree
             .insert(GeomWithData::new(value.clone(), key.clone()));
         self.collection.insert(key, value);
+    }
+}
+
+impl<K, C: Set<K, Key = K> + Insert<K>> Set<K> for RTreed<C>
+where
+    K: Clone,
+    C::Value: Clone + RTreeObject,
+{
+    #[inline]
+    fn set(&mut self, key: K, value: C::Value) {
+        self.set(key, value);
+    }
+}
+
+impl<K, C: Set<K, Key = K> + Set<K>> RTreed<C>
+where
+    K: Clone + PartialEq,
+    C::Value: Clone + PartialEq + RTreeObject,
+{
+    #[inline]
+    pub fn set(&mut self, key: K, value: C::Value) {
+        self.rtree
+            .remove(&GeomWithData::new(value.clone(), key.clone()));
+        self.rtree
+            .insert(GeomWithData::new(value.clone(), key.clone()));
+        self.collection.set(key, value);
     }
 }
 
