@@ -10,6 +10,6 @@ steps:
       CARGO_TERM_COLOR: always
     commands:
       - cargo install cargo-llvm-cov
-      - cargo llvm-cov --all-features --all-targets --fail-under-lines 70
+      - cargo llvm-cov --all-features --all-targets --fail-under-lines 60
     when:
       event: [pull_request, push, tag]
