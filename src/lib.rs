@@ -115,12 +115,12 @@ where
 
 impl<K, C: Set<K, Key = K> + Insert<K>> Set<K> for RTreed<C>
 where
-    K: Clone,
-    C::Value: Clone + RTreeObject,
+    K: Clone + PartialEq,
+    C::Value: Clone + PartialEq + RTreeObject,
 {
     #[inline]
     fn set(&mut self, key: K, value: C::Value) {
-        self.set(key, value);
+        RTreed::set(self, key, value);
     }
 }
 
