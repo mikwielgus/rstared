@@ -20,12 +20,32 @@ use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 pub use maplike::{Get, Insert, KeyedCollection, Push, Remove, StableRemove};
 
 #[derive(Clone, Debug)]
+pub struct AsRefRTree<T: RTreeObject> {
+    pub rtree: RTree<T>,
+}
+
+impl<T: RTreeObject> AsRef<RTree<T>> for AsRefRTree<T> {
+    fn as_ref(&self) -> &RTree<T> {
+        &self.rtree
+    }
+}
+
+#[derive(Clone, Debug)]
 pub struct RTreed<C: KeyedCollection>
 where
     C::Value: RTreeObject,
 {
     collection: C,
     rtree: RTree<GeomWithData<C::Value, C::Key>>,
+}
+
+impl<C: KeyedCollection> AsRef<RTree<GeomWithData<C::Value, C::Key>>> for RTreed<C>
+where
+    C::Value: RTreeObject,
+{
+    fn as_ref(&self) -> &RTree<GeomWithData<C::Value, C::Key>> {
+        &self.rtree
+    }
 }
 
 impl<C: KeyedCollection> RTreed<C>
