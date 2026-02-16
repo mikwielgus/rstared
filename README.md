@@ -113,11 +113,13 @@ We welcome issues and pull requests from anyone both to our canonical
 [repository](https://codeberg.org/topola/rstared) on Codeberg and to our GitHub
 [mirror](https://github.com/mikwielgus/rstared).
 
-If you would like `rstared` to work with a new collection type, please send
+If you would like `rstared` to work with a new collection type, please make
 a contribution to [`maplike`](https://docs.rs/maplike/latest/maplike/), which
 provides and implements the traits `rstared` relies on.
 
 ## Licence
+
+### Outbound licence
 
 `undoredo` is dual-licensed as under either of
 
@@ -125,3 +127,9 @@ provides and implements the traits `rstared` relies on.
 - [Apache License, Version 2.0](./LICENSES/Apache-2.0.txt),
 
 at your option.
+
+### Inbound licence
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in this work by you will be dual-licensed as described above,
+without any additional terms or conditions.
