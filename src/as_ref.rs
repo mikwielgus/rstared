@@ -5,7 +5,7 @@
 use maplike::{Get, Insert, IntoIter, KeyedCollection, Remove, Set, StableRemove};
 use rstar::{RTree, RTreeObject};
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct AsRefRTree<T: RTreeObject> {
     pub rtree: RTree<T>,
 }
@@ -13,6 +13,20 @@ pub struct AsRefRTree<T: RTreeObject> {
 impl<T: RTreeObject> AsRef<RTree<T>> for AsRefRTree<T> {
     fn as_ref(&self) -> &RTree<T> {
         &self.rtree
+    }
+}
+
+impl<T: RTreeObject> AsRefRTree<T> {
+    pub fn new() -> Self {
+        Self {
+            rtree: RTree::new(),
+        }
+    }
+}
+
+impl<T: RTreeObject> Default for AsRefRTree<T> {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
