@@ -5,7 +5,7 @@
 use maplike::{Get, Insert, IntoIter, KeyedCollection, Remove, Set, StableRemove};
 use rstar::{RTree, RTreeObject};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct AsRefRTree<T: RTreeObject> {
     pub rtree: RTree<T>,
 }

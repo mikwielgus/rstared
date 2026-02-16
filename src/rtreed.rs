@@ -5,7 +5,7 @@
 use maplike::{Get, Insert, IntoIter, KeyedCollection, Push, Remove, Set, StableRemove};
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct RTreed<C: KeyedCollection>
 where
     C::Value: RTreeObject,
@@ -43,16 +43,6 @@ where
     #[inline]
     pub fn rtree(&self) -> &RTree<GeomWithData<C::Value, C::Key>> {
         &self.rtree
-    }
-}
-
-impl<C: KeyedCollection + Default> Default for RTreed<C>
-where
-    C::Value: RTreeObject,
-{
-    #[inline]
-    fn default() -> Self {
-        RTreed::new(C::default())
     }
 }
 
