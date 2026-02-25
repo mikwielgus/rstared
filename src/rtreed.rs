@@ -124,7 +124,7 @@ where
     }
 }
 
-impl<K, C: StableRemove<K, Key = K>> Remove<K> for RTreed<C>
+impl<K, C: Remove<K, Key = K>> Remove<K> for RTreed<C>
 where
     K: Clone + PartialEq,
     C::Value: Clone + PartialEq + RTreeObject,
@@ -142,7 +142,7 @@ where
 {
 }
 
-impl<K, C: StableRemove<K, Key = K>> RTreed<C>
+impl<K, C: Remove<K, Key = K>> RTreed<C>
 where
     K: Clone + PartialEq,
     C::Value: Clone + PartialEq + RTreeObject,
