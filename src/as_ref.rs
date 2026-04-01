@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-use maplike::{Get, Insert, IntoIter, KeyedCollection, Remove, Set, StableRemove};
+use maplike::{Container, Get, Insert, IntoIter, Remove, Set};
 use rstar::{RTree, RTreeObject};
 
 #[derive(Clone, Debug)]
@@ -30,7 +30,7 @@ impl<T: RTreeObject> Default for AsRefRTree<T> {
     }
 }
 
-impl<K: RTreeObject> KeyedCollection for AsRefRTree<K> {
+impl<K: RTreeObject> Container for AsRefRTree<K> {
     type Key = K;
     type Value = ();
 }
@@ -62,8 +62,6 @@ impl<K: RTreeObject + PartialEq> Remove<K> for AsRefRTree<K> {
         Remove::remove(&mut self.rtree, key)
     }
 }
-
-impl<K: RTreeObject + PartialEq> StableRemove<K> for AsRefRTree<K> {}
 
 impl<K: RTreeObject> IntoIter<K> for AsRefRTree<K> {
     type IntoIter = <RTree<K> as IntoIter<K>>::IntoIter;

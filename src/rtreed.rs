@@ -2,11 +2,11 @@
 //
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-use maplike::{Get, Insert, IntoIter, KeyedCollection, Push, Remove, Set, StableRemove};
+use maplike::{Container, Get, Insert, IntoIter, Push, Remove, Set};
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
 #[derive(Clone, Debug, Default)]
-pub struct RTreed<C: KeyedCollection>
+pub struct RTreed<C: Container>
 where
     C::Value: RTreeObject,
 {
@@ -14,7 +14,7 @@ where
     rtree: RTree<GeomWithData<C::Value, C::Key>>,
 }
 
-impl<C: KeyedCollection> AsRef<RTree<GeomWithData<C::Value, C::Key>>> for RTreed<C>
+impl<C: Container> AsRef<RTree<GeomWithData<C::Value, C::Key>>> for RTreed<C>
 where
     C::Value: RTreeObject,
 {
@@ -23,7 +23,7 @@ where
     }
 }
 
-impl<C: KeyedCollection> RTreed<C>
+impl<C: Container> RTreed<C>
 where
     C::Value: RTreeObject,
 {
@@ -46,7 +46,7 @@ where
     }
 }
 
-impl<C: KeyedCollection> KeyedCollection for RTreed<C>
+impl<C: Container> Container for RTreed<C>
 where
     C::Value: RTreeObject,
 {
@@ -135,13 +135,6 @@ where
     }
 }
 
-impl<K, C: StableRemove<K, Key = K>> StableRemove<K> for RTreed<C>
-where
-    K: Clone + PartialEq,
-    C::Value: Clone + PartialEq + RTreeObject,
-{
-}
-
 impl<K, C: Remove<K, Key = K>> RTreed<C>
 where
     K: Clone + PartialEq,
@@ -223,10 +216,7 @@ mod tests {
     /// "AAR" stands for "axis-aligned rectangle".
     fn test_push_and_remove_random_aars<
         K: Clone + PartialEq,
-        C: KeyedCollection<Key = K, Value = Rectangle<(i32, i32)>>
-            + Get<K>
-            + Push<K>
-            + StableRemove<K>,
+        C: Container<Key = K, Value = Rectangle<(i32, i32)>> + Get<K> + Push<K> + Remove<K>,
     >(
         collection: C,
     ) {
