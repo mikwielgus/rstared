@@ -4,7 +4,6 @@ SPDX-FileCopyrightText: 2025 rstared contributors
 SPDX-License-Identifier: MIT OR Apache-2.0
 -->
 
-[![CI Status](https://ci.codeberg.org/api/badges/15785/status.svg)](https://ci.codeberg.org/repos/15785)
 [![Docs](https://docs.rs/rstared/badge.svg)](https://docs.rs/rstared/)
 [![Crates.io](https://img.shields.io/crates/v/rstared.svg)](https://crates.io/crates/rstared)
 [![MIT OR Apache 2.0](https://img.shields.io/crates/l/rstared.svg)](#licence)
@@ -48,7 +47,7 @@ rstared = { version = "0.8", features = ["stable-vec", "thunderdome"] }
 ```
 
 Following is a basic usage example
-([examples/basic_usage.rs](https://codeberg.org/topola/rstared/src/branch/develop/examples/basic_usage.rs)):
+([examples/basic_usage.rs](https://github.com/mikwielgus/undoredo/blob/develop/examples/basic_usage.rs)):
 
 ```rust
 use std::collections::HashMap;
@@ -109,9 +108,8 @@ rtreed.push('A');
 
 ## Contributing
 
-We welcome issues and pull requests from anyone both to our canonical
-[repository](https://codeberg.org/topola/rstared) on Codeberg and to our GitHub
-[mirror](https://github.com/mikwielgus/rstared).
+We welcome issues and pull requests from anyone both to our
+[repository](https://github.com/mikwielgus/rstared) on GitHub.
 
 If you would like `rstared` to work with a new collection type, please make
 a contribution to [`maplike`](https://docs.rs/maplike/latest/maplike/), which
