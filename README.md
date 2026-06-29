@@ -43,7 +43,7 @@ with `stable_vec::StableVec` and `thunderdome::Arena`, write
 
 ```toml
 [dependencies]
-rstared = { version = "0.8", features = ["stable-vec", "thunderdome"] }
+rstared = { version = "0.10.0", features = ["stable-vec", "thunderdome"] }
 ```
 
 Following is a basic usage example
@@ -119,7 +119,7 @@ provides and implements the traits `rstared` relies on.
 
 ### Outbound licence
 
-`undoredo` is dual-licensed as under either of
+`rstared` is dual-licensed as under either of
 
 - [MIT license](./LICENSES/MIT.txt),
 - [Apache License, Version 2.0](./LICENSES/Apache-2.0.txt),
