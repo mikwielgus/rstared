@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+use core::convert::AsRef;
+
 use maplike::{Container, Get, Insert, IntoIter, Push, Remove, Set};
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
@@ -79,9 +81,11 @@ where
     K: Clone,
     C::Value: Clone + RTreeObject,
 {
+    type Output = <C as Insert<K>>::Output;
+
     #[inline]
-    fn insert(&mut self, key: K, value: C::Value) {
-        self.insert(key, value);
+    fn insert(&mut self, key: K, value: C::Value) -> Self::Output {
+        self.insert(key, value)
     }
 }
 
@@ -91,10 +95,10 @@ where
     C::Value: Clone + RTreeObject,
 {
     #[inline]
-    pub fn insert(&mut self, key: K, value: C::Value) {
+    pub fn insert(&mut self, key: K, value: C::Value) -> C::Output {
         self.rtree
             .insert(GeomWithData::new(value.clone(), key.clone()));
-        self.collection.insert(key, value);
+        self.collection.insert(key, value)
     }
 }
 
@@ -103,9 +107,11 @@ where
     K: Clone + PartialEq,
     C::Value: Clone + PartialEq + RTreeObject,
 {
+    type Output = <C as Set<K>>::Output;
+
     #[inline]
-    fn set(&mut self, key: K, value: C::Value) {
-        RTreed::set(self, key, value);
+    fn set(&mut self, key: K, value: C::Value) -> Self::Output {
+        RTreed::set(self, key, value)
     }
 }
 
@@ -115,12 +121,12 @@ where
     C::Value: Clone + PartialEq + RTreeObject,
 {
     #[inline]
-    pub fn set(&mut self, key: K, value: C::Value) {
+    pub fn set(&mut self, key: K, value: C::Value) -> C::Output {
         self.rtree
             .remove(&GeomWithData::new(value.clone(), key.clone()));
         self.rtree
             .insert(GeomWithData::new(value.clone(), key.clone()));
-        self.collection.set(key, value);
+        self.collection.set(key, value)
     }
 }
 

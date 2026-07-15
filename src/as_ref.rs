@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+use core::convert::AsRef;
+
 use maplike::{Container, Get, Insert, IntoIter, Remove, Set};
 use rstar::{RTree, RTreeObject};
 
@@ -43,15 +45,19 @@ impl<K: RTreeObject + PartialEq> Get<K> for AsRefRTree<K> {
 }
 
 impl<K: RTreeObject + PartialEq> Set<K> for AsRefRTree<K> {
+    type Output = ();
+
     #[inline(always)]
-    fn set(&mut self, key: K, value: ()) {
+    fn set(&mut self, key: K, value: ()) -> () {
         Set::set(&mut self.rtree, key, value);
     }
 }
 
 impl<K: RTreeObject> Insert<K> for AsRefRTree<K> {
+    type Output = ();
+
     #[inline(always)]
-    fn insert(&mut self, key: K, value: ()) {
+    fn insert(&mut self, key: K, value: ()) -> () {
         Insert::insert(&mut self.rtree, key, value)
     }
 }
