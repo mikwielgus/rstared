@@ -4,7 +4,8 @@
 
 use core::convert::AsRef;
 
-use maplike::{Container, Get, Insert, IntoIter, Remove, Set};
+use maplike::containers::Container;
+use maplike::ops::{Get, Insert, IntoIter, Remove, Set};
 use rstar::{RTree, RTreeObject};
 
 #[derive(Clone, Debug)]

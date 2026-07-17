@@ -19,4 +19,5 @@ mod rtreed;
 
 pub use crate::as_ref::AsRefRTree;
 pub use crate::rtreed::RTreed;
-pub use maplike::{Container, Get, Insert, Push, Remove};
+pub use maplike::containers::Container;
+pub use maplike::ops::{Get, Insert, Push, Remove};

@@ -4,7 +4,8 @@
 
 use core::convert::AsRef;
 
-use maplike::{Container, Get, Insert, IntoIter, Push, Remove, Set};
+use maplike::containers::Container;
+use maplike::ops::{Get, Insert, IntoIter, Push, Remove, Set};
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
 #[derive(Clone, Debug, Default)]
