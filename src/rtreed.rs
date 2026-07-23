@@ -5,7 +5,8 @@
 use core::convert::AsRef;
 
 use maplike::containers::Container;
-use maplike::ops::{Get, Insert, IntoIter, Push, Remove, Set};
+use maplike::iter::IntoIter;
+use maplike::ops::{Get, Insert, Push, Remove, Set};
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
 #[derive(Clone, Debug, Default)]
@@ -131,24 +132,28 @@ where
     }
 }
 
-impl<K, C: Remove<K, Key = K>> Remove<K> for RTreed<C>
+impl<K, V, C> Remove<K> for RTreed<C>
 where
     K: Clone + PartialEq,
-    C::Value: Clone + PartialEq + RTreeObject,
+    V: Clone + PartialEq + RTreeObject,
+    C: Container<Key = K, Value = V> + Remove<K, Output = Option<V>>,
 {
+    type Output = Option<V>;
+
     #[inline]
-    fn remove(&mut self, key: &K) -> Option<C::Value> {
+    fn remove(&mut self, key: &K) -> Option<V> {
         self.remove(key)
     }
 }
 
-impl<K, C: Remove<K, Key = K>> RTreed<C>
+impl<K, V, C> RTreed<C>
 where
     K: Clone + PartialEq,
-    C::Value: Clone + PartialEq + RTreeObject,
+    V: Clone + PartialEq + RTreeObject,
+    C: Container<Key = K, Value = V> + Remove<K, Output = Option<V>>,
 {
     #[inline]
-    pub fn remove(&mut self, key: &K) -> Option<C::Value> {
+    pub fn remove(&mut self, key: &K) -> Option<V> {
         let value = self.collection.remove(&key.clone())?;
         self.rtree
             .remove(&GeomWithData::new(value.clone(), key.clone()));
@@ -223,7 +228,10 @@ mod tests {
     /// "AAR" stands for "axis-aligned rectangle".
     fn test_push_and_remove_random_aars<
         K: Clone + PartialEq,
-        C: Container<Key = K, Value = Rectangle<(i32, i32)>> + Get<K> + Push<K> + Remove<K>,
+        C: Container<Key = K, Value = Rectangle<(i32, i32)>>
+            + Get<K>
+            + Push<K>
+            + Remove<K, Output = Option<Rectangle<(i32, i32)>>>,
     >(
         collection: C,
     ) {

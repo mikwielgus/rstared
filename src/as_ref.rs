@@ -5,7 +5,8 @@
 use core::convert::AsRef;
 
 use maplike::containers::Container;
-use maplike::ops::{Get, Insert, IntoIter, Remove, Set};
+use maplike::iter::IntoIter;
+use maplike::ops::{Get, Insert, Remove, Set};
 use rstar::{RTree, RTreeObject};
 
 #[derive(Clone, Debug)]
@@ -64,8 +65,10 @@ impl<K: RTreeObject> Insert<K> for AsRefRTree<K> {
 }
 
 impl<K: RTreeObject + PartialEq> Remove<K> for AsRefRTree<K> {
+    type Output = <RTree<K> as Remove<K>>::Output;
+
     #[inline(always)]
-    fn remove(&mut self, key: &K) -> Option<()> {
+    fn remove(&mut self, key: &K) -> Self::Output {
         Remove::remove(&mut self.rtree, key)
     }
 }
