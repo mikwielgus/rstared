@@ -17,17 +17,17 @@ passively listening R-tree,
 following collections:
 
 - [`HashMap`](https://doc.rust-lang.org/std/collections/struct.HashMap.html),
-  gated by the `std` feature (enabled by default);
+  gated by the `std` feature of `maplike` (enabled by default);
 - [`HashSet`](https://doc.rust-lang.org/stable/std/collections/struct.HashSet.html),
-  gated by the `std` feature (enabled by default);
+  gated by the `std` feature of `maplike` (enabled by default);
 - [`BTreeMap`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html),
   not feature-gated;
 - [`BTreeSet`](https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html),
   not feature-gated;
 - [`stable_vec::StableVec`](https://docs.rs/stable-vec/latest/stable_vec/),
-  gated by the `stable-vec` feature;
+  gated by the `stable-vec` feature of `maplike`;
 - [`thunderdome::Arena`](https://docs.rs/thunderdome/latest/thunderdome/),
-  gated by the `thunderdome` feature.
+  gated by the `thunderdome` feature of `maplike`.
 
 
 This library is `no_std`-compatible and has no mandatory third-party
