@@ -22,7 +22,7 @@ fn main() {
     assert_eq!(
         rtreed
             .rtree()
-            .locate_in_envelope(&AABB::from_corners((0, 0), (2, 2)))
+            .locate_in_envelope(AABB::from_corners((0, 0), (2, 2)))
             .count(),
         2
     );
@@ -35,7 +35,7 @@ fn main() {
     assert_eq!(
         rtreed
             .rtree()
-            .locate_in_envelope(&AABB::from_corners((0, 0), (2, 2)))
+            .locate_in_envelope(AABB::from_corners((0, 0), (2, 2)))
             .count(),
         1
     );
