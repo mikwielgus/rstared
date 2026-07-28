@@ -199,7 +199,7 @@ where
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, any(feature = "stable-vec", feature = "thunderdome")))]
 mod tests {
     use rand::Rng;
     use rstar::{AABB, primitives::Rectangle};
@@ -251,7 +251,7 @@ mod tests {
         assert_eq!(
             rtreed
                 .rtree()
-                .locate_in_envelope(&AABB::from_corners((0, 0), (100, 100)))
+                .locate_in_envelope(AABB::from_corners((0, 0), (100, 100)))
                 .count(),
             100
         );
@@ -263,7 +263,7 @@ mod tests {
         assert_eq!(
             rtreed
                 .rtree()
-                .locate_in_envelope(&AABB::from_corners((0, 0), (100, 100)))
+                .locate_in_envelope(AABB::from_corners((0, 0), (100, 100)))
                 .count(),
             90
         );
