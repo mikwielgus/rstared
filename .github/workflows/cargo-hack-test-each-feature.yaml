@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2026 undoredo contributors
+#
+# SPDX-License-Identifier: MIT OR Apache-2.0
+
+name: cargo-hack-test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  each-feature-examples-tests-doc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-hack
+
+      - name: Test examples, tests, docs for each feature flag
+        run: cargo hack test --workspace --each-feature --examples --tests && cargo hack test --workspace --all-features --doc
