@@ -11,6 +11,11 @@
 // No feature for `alloc` because it would be always enabled anyway.
 extern crate alloc;
 
+#[cfg(feature = "undoredo")]
+mod delta;
+#[cfg(feature = "undoredo")]
+pub use delta::*;
+
 mod rtreed;
 
 pub use crate::rtreed::RTreed;
