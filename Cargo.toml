@@ -19,8 +19,9 @@ edition = "2024"
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-maplike = { version = "0.13.5", features = ["rstar"] }
+maplike = { version = "0.13.5", features = ["rstar"], default-features = false }
 rstar = "0.13"
+undoredo = { version = "0.13", features = ["rstar"], default-features = false, optional = true }
 
 [dev-dependencies]
 maplike = { version = "0.13.5", features = ["rstar", "stable-vec", "thunderdome"] }
@@ -35,4 +36,9 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [[example]]
 name = "basic_usage"
+doc-scrape-examples = true
+
+[[example]]
+name = "undoredo"
+required-features = ["undoredo"]
 doc-scrape-examples = true
