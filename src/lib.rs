@@ -11,10 +11,8 @@
 // No feature for `alloc` because it would be always enabled anyway.
 extern crate alloc;
 
-mod as_ref;
 mod rtreed;
 
-pub use crate::as_ref::AsRefRTree;
 pub use crate::rtreed::RTreed;
 pub use maplike::containers::Container;
 pub use maplike::ops::{Get, Insert, Push, Remove};
