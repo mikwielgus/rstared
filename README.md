@@ -17,17 +17,17 @@ passively listening R-tree,
 following collections:
 
 - [`HashMap`](https://doc.rust-lang.org/std/collections/struct.HashMap.html),
-  gated by the `std` feature of `maplike` (enabled by default);
+  gated by the `std` feature (enabled by default);
 - [`HashSet`](https://doc.rust-lang.org/stable/std/collections/struct.HashSet.html),
-  gated by the `std` feature of `maplike` (enabled by default);
+  gated by the `std` feature (enabled by default);
 - [`BTreeMap`](https://doc.rust-lang.org/std/collections/struct.BTreeMap.html),
   not feature-gated;
 - [`BTreeSet`](https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html),
   not feature-gated;
 - [`stable_vec::StableVec`](https://docs.rs/stable-vec/latest/stable_vec/),
-  gated by the `stable-vec` feature of `maplike`;
+  gated by the `stable-vec` feature;
 - [`thunderdome::Arena`](https://docs.rs/thunderdome/latest/thunderdome/),
-  gated by the `thunderdome` feature of `maplike`.
+  gated by the `thunderdome` feature.
 
 
 This library is `no_std`-compatible and has no mandatory third-party
@@ -47,7 +47,7 @@ rstared = { version = "0.14.0", features = ["stable-vec", "thunderdome"] }
 ```
 
 Following is a basic usage example
-([examples/basic_usage.rs](https://github.com/mikwielgus/undoredo/blob/develop/examples/basic_usage.rs)):
+([examples/basic_usage.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/basic_usage.rs)):
 
 ```rust
 use std::collections::HashMap;

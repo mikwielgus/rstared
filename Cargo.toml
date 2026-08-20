@@ -18,13 +18,21 @@ edition = "2024"
 [badges]
 maintenance = { status = "actively-developed" }
 
+[features]
+default = ["std"]
+std = ["maplike/std"]
+stable-vec = ["dep:stable-vec", "maplike/stable-vec"]
+thunderdome = ["dep:thunderdome", "maplike/thunderdome"]
+undoredo = ["dep:undoredo"]
+
 [dependencies]
-maplike = { version = "0.13.5", features = ["rstar"], default-features = false }
+maplike = { version = "0.14", features = ["alloc", "rstar"], default-features = false }
 rstar = "0.13"
-undoredo = { version = "0.13", features = ["rstar"], default-features = false, optional = true }
+stable-vec = { version = "0.4", optional = true }
+thunderdome = { version = "0.6", optional = true }
+undoredo = { version = "0.14", features = ["rstar"], default-features = false, optional = true }
 
 [dev-dependencies]
-maplike = { version = "0.13.5", features = ["rstar", "stable-vec", "thunderdome"] }
 rand = "0.9"
 stable-vec = "0.4"
 thunderdome = "0.6"
@@ -36,9 +44,10 @@ rustdoc-args = ["--cfg", "docsrs"]
 
 [[example]]
 name = "basic_usage"
+required-features = ["std"]
 doc-scrape-examples = true
 
 [[example]]
 name = "undoredo"
-required-features = ["undoredo"]
+required-features = ["undoredo", "std"]
 doc-scrape-examples = true

@@ -2,6 +2,8 @@
 //
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
+#![cfg(any(feature = "stable-vec", feature = "thunderdome"))]
+
 extern crate alloc;
 
 use maplike::{
@@ -12,6 +14,7 @@ use rand::Rng;
 use rstar::{AABB, primitives::Rectangle};
 use rstared::RTreed;
 
+#[cfg(feature = "stable-vec")]
 #[test]
 fn test_push_and_remove_random_aars_in_stable_vec() {
     use stable_vec::StableVec;
@@ -20,6 +23,7 @@ fn test_push_and_remove_random_aars_in_stable_vec() {
     >::new());
 }
 
+#[cfg(feature = "thunderdome")]
 #[test]
 fn test_push_and_remove_random_aars_in_thunderdome() {
     use thunderdome::Arena;
