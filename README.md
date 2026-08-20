@@ -43,7 +43,7 @@ with `stable_vec::StableVec` and `thunderdome::Arena`, write
 
 ```toml
 [dependencies]
-rstared = { version = "0.13.1", features = ["stable-vec", "thunderdome"] }
+rstared = { version = "0.14.0", features = ["stable-vec", "thunderdome"] }
 ```
 
 Following is a basic usage example
