@@ -13,8 +13,14 @@ SPDX-License-Identifier: MIT OR Apache-2.0
 `rstared::RTreed` is a simple Rust
 [decorator](https://en.wikipedia.org/wiki/Decorator_pattern) that adds a
 passively listening R-tree,
-[`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to the
-following collections:
+[`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to
+collections that implement [`maplike`](https://docs.rs/maplike/latest/maplike/)
+traits (with values that implement
+[`rstar::RTreeObject`](https://docs.rs/rstar/latest/rstar/trait.RTreeObject.html)).
+
+## Supported collections
+
+### Standard library
 
 - [`HashMap`](https://doc.rust-lang.org/std/collections/struct.HashMap.html),
   gated by the `std` feature (enabled by default);
@@ -24,30 +30,62 @@ following collections:
   not feature-gated;
 - [`BTreeSet`](https://doc.rust-lang.org/stable/std/collections/struct.BTreeSet.html),
   not feature-gated;
+- [`Vec`](https://doc.rust-lang.org/std/vec/struct.Vec.html), not feature-gated;
+- [`VecDeque`](https://doc.rust-lang.org/alloc/collections/vec_deque/struct.VecDeque.html),
+  not feature-gated.
+
+### Third-party types
+
+- [`bidimap::BiBTreeMap`](https://docs.rs/bidimap/latest/bidimap/), gated by the
+  `bidimap` feature, and
+  [`bidimap::BiHashMap`](https://docs.rs/bidimap/latest/bidimap/), which is
+  additionally gated by the `std` feature;
+- [`indexmap::IndexMap`](https://docs.rs/indexmap/latest/indexmap/map/struct.IndexMap.html)
+  and [`indexmap::IndexSet`](https://docs.rs/indexmap/latest/indexmap/set/struct.IndexSet.html),
+  gated by the `indexmap` feature;
+- [`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/index.html), not
+  feature-gated;
 - [`stable_vec::StableVec`](https://docs.rs/stable-vec/latest/stable_vec/),
   gated by the `stable-vec` feature;
 - [`thunderdome::Arena`](https://docs.rs/thunderdome/latest/thunderdome/),
-  gated by the `thunderdome` feature.
-
+  gated by the `thunderdome` feature;
+- [`arrayvec::ArrayVec`](https://docs.rs/arrayvec/latest/arrayvec/struct.ArrayVec.html),
+  gated by the `arrayvec` feature;
+- `smallvec::SmallVec`, gated by the `smallvec` feature;
+- [`tinyvec::ArrayVec`](https://docs.rs/tinyvec/latest/tinyvec/struct.ArrayVec.html)
+  and [`tinyvec::TinyVec`](https://docs.rs/tinyvec/latest/tinyvec/enum.TinyVec.html),
+  gated by the `tinyvec` feature;
 
 This library is `no_std`-compatible and has no mandatory third-party
 dependencies except for [`alloc`](https://doc.rust-lang.org/alloc/).
 
 ## Usage
 
-### Basic usage
+### Adding dependency
 
 Add `rstared` as a dependency to your `Cargo.toml` together with the features
-that gate the collections you are going to use. For example, to use `rstared`
-with `stable_vec::StableVec` and `thunderdome::Arena`, write
+that gate the collections you are going to use:
 
 ```toml
 [dependencies]
-rstared = { version = "0.14.0", features = ["stable-vec", "thunderdome"] }
+rstared = { version = "0.14.0", features = [
+    "arrayvec",
+    "bidimap",
+    "indexmap",
+    "smallvec",
+    "stable-vec",
+    "thunderdome",
+    "tinyvec",
+] }
 ```
 
-Following is a basic usage example
-([examples/basic_usage.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/basic_usage.rs)):
+For the sake of demonstration, all feature flags are enabled in that snippet.
+Remove those you don't need.
+
+### Usage example on `HashMap`
+
+Following is a basic usage example on `HashMap`
+([examples/hashmap.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/hashmap.rs)):
 
 ```rust
 use std::collections::HashMap;
@@ -89,22 +127,6 @@ fn main() {
     );
 }
 ```
-
-### Usage on maps with pushing
-
-Some data structures with map semantics also provide a special type of insertion
-where a value is inserted without specifying a key, which the structure
-instead automatically generates and returns by itself. This operation is called
-*pushing*.
-
-If a supported type has a push interface, you can use it through `RTreed` by
-calling `.push()`, like this:
-
-```rust-ignore
-rtreed.push('A');
-```
-
-`StableVec` and `thunderdome::Arena` are instances of supported pushable maps.
 
 ## Contributing
 
