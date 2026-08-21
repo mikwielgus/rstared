@@ -82,9 +82,47 @@ rstared = { version = "0.14.0", features = [
 For the sake of demonstration, all feature flags are enabled in that snippet.
 Remove those you don't need.
 
+### Usage example on `Vec`
+
+Following is a basic usage example on `Vec`
+([examples/vec.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/vec.rs)).
+`Vec` is pushable, so values are added with `.push()` and keyed by their index:
+
+```rust
+use rstar::{AABB, primitives::Rectangle};
+use rstared::RTreed;
+
+fn main() {
+    // A vec of 2D rectangles will be the underlying collection.
+    let rect_vec: Vec<Rectangle<(i32, i32)>> = Vec::new();
+
+    // Wrap `RTreed` around the vec.
+    let mut rtreed = RTreed::new(rect_vec);
+
+    // Push two rectangles, recording them in the R-tree.
+    rtreed.push(Rectangle::from_corners((0, 0), (1, 1)));
+    rtreed.push(Rectangle::from_corners((1, 1), (2, 2)));
+
+    // Locate the two rectangles in the R-tree.
+    assert_eq!(
+        rtreed
+            .rtree()
+            .locate_in_envelope(AABB::from_corners((0, 0), (2, 2)))
+            .count(),
+        2
+    );
+
+    // Access a rectangle by its index in the vec.
+    assert_eq!(
+        rtreed.get(&0),
+        Some(&Rectangle::from_corners((0, 0), (1, 1)))
+    );
+}
+```
+
 ### Usage example on `HashMap`
 
-Following is a basic usage example on `HashMap`
+Following is another usage example, this time on `HashMap`
 ([examples/hashmap.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/hashmap.rs)):
 
 ```rust

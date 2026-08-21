@@ -58,6 +58,10 @@ required-features = ["std"]
 doc-scrape-examples = true
 
 [[example]]
+name = "vec"
+doc-scrape-examples = true
+
+[[example]]
 name = "undoredo"
 required-features = ["undoredo", "std"]
 doc-scrape-examples = true
