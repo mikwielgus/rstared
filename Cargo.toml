@@ -23,6 +23,7 @@ default = ["std"]
 std = ["maplike/std"]
 arrayvec = ["dep:arrayvec", "maplike/arrayvec"]
 bidimap = ["dep:bidimap", "maplike/bidimap"]
+geo = ["maplike/geo"]
 indexmap = ["dep:indexmap", "maplike/indexmap"]
 smallvec = ["dep:smallvec", "maplike/smallvec"]
 stable-vec = ["dep:stable-vec", "maplike/stable-vec"]
@@ -43,6 +44,7 @@ tinyvec = { version = "1", features = ["alloc"], optional = true }
 undoredo = { version = "0.14", features = ["rstar"], default-features = false, optional = true }
 
 [dev-dependencies]
+geo-types = { version = "0.7", features = ["rstar_0_13"] }
 rand = "0.9"
 stable-vec = "0.4"
 thunderdome = "0.6"
@@ -55,6 +57,11 @@ rustdoc-args = ["--cfg", "docsrs"]
 [[example]]
 name = "hashmap"
 required-features = ["std"]
+doc-scrape-examples = true
+
+[[example]]
+name = "multipolygon"
+required-features = ["geo"]
 doc-scrape-examples = true
 
 [[example]]

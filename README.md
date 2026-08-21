@@ -55,6 +55,13 @@ traits (with values that implement
 - [`tinyvec::ArrayVec`](https://docs.rs/tinyvec/latest/tinyvec/struct.ArrayVec.html)
   and [`tinyvec::TinyVec`](https://docs.rs/tinyvec/latest/tinyvec/enum.TinyVec.html),
   gated by the `tinyvec` feature;
+- geometry types from [`geo`](https://docs.rs/geo)/[`geo-types`](https://docs.rs/geo-types):
+  [`LineString`](https://docs.rs/geo/latest/geo/struct.LineString.html),
+  [`MultiPoint`](https://docs.rs/geo/latest/geo/struct.MultiPoint.html),
+  [`MultiLineString`](https://docs.rs/geo/latest/geo/struct.MultiLineString.html),
+  [`MultiPolygon`](https://docs.rs/geo/latest/geo/struct.MultiPolygon.html), and
+  [`GeometryCollection`](https://docs.rs/geo/latest/geo/struct.GeometryCollection.html)
+  gated by the `geo` feature;
 
 This library is `no_std`-compatible and has no mandatory third-party
 dependencies except for [`alloc`](https://doc.rust-lang.org/alloc/).
@@ -71,6 +78,7 @@ that gate the collections you are going to use:
 rstared = { version = "0.14.0", features = [
     "arrayvec",
     "bidimap",
+    "geo",
     "indexmap",
     "smallvec",
     "stable-vec",
@@ -82,7 +90,9 @@ rstared = { version = "0.14.0", features = [
 For the sake of demonstration, all feature flags are enabled in that snippet.
 Remove those you don't need.
 
-### Usage example on `Vec`
+### Usage examples
+
+#### `Vec` example
 
 Following is a basic usage example on `Vec`
 ([examples/vec.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/vec.rs)).
@@ -120,51 +130,81 @@ fn main() {
 }
 ```
 
-### Usage example on `HashMap`
+#### `HashMap` example
 
-Following is another usage example, this time on `HashMap`
-([examples/hashmap.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/hashmap.rs)):
+See also
+[examples/hashmap.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/multipolygon.rs)
+for a usage example on `HashMap`, which lacks a `.push()` interface but has
+`.remove()`.
+
+#### `MultiPolygon` example
+
+Following is a usage example on `geo`'s
+[`MultiPolygon`](https://docs.rs/geo/latest/geo/geometry/struct.MultiPolygon.html)
+([examples/multipolygon.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/multipolygon.rs)).
+Like `Vec`, `MultiPolygon` is pushable, so polygons are added with `.push()`
+and keyed by their index. You need to enable the `rstar_0_13` feature
+on [`geo-types`](https://docs.rs/geo-types) to have `Polygon` implement
+`RTreeObject`:
 
 ```rust
-use std::collections::HashMap;
-
-use rstar::{AABB, primitives::Rectangle};
+use geo_types::{MultiPolygon, Point, Polygon, line_string};
+use rstar::AABB;
 use rstared::RTreed;
 
 fn main() {
-    // A hashmap of 2D rectangles will be the underlying collection.
-    let rect_hashmap: HashMap<i32, Rectangle<(i32, i32)>> = HashMap::new();
+    let multipolygon: MultiPolygon<f64> = MultiPolygon::new(vec![]);
+    let mut rtreed = RTreed::new(multipolygon);
 
-    // Wrap `RTreed` around the hashmap.
-    let mut rtreed = RTreed::new(rect_hashmap);
+    // Push two polygons, recording them in the R-tree.
+    rtreed.push(Polygon::new(
+        line_string![
+            (x: 0.0, y: 0.0),
+            (x: 1.0, y: 0.0),
+            (x: 1.0, y: 1.0),
+            (x: 0.0, y: 0.0),
+        ],
+        vec![],
+    ));
+    rtreed.push(Polygon::new(
+        line_string![
+            (x: 1.0, y: 1.0),
+            (x: 2.0, y: 1.0),
+            (x: 2.0, y: 2.0),
+            (x: 1.0, y: 1.0),
+        ],
+        vec![],
+    ));
 
-    // Insert two rectangles, recording them in the R-tree.
-    rtreed.insert(1, Rectangle::from_corners((0, 0), (1, 1)));
-    rtreed.insert(2, Rectangle::from_corners((1, 1), (2, 2)));
-
-    // Locate the two rectangles in the R-tree.
+    // Locate the two polygons in the R-tree.
     assert_eq!(
         rtreed
             .rtree()
-            .locate_in_envelope(AABB::from_corners((0, 0), (2, 2)))
+            .locate_in_envelope(AABB::from_corners(
+                Point::new(0.0, 0.0),
+                Point::new(2.0, 2.0),
+            ))
             .count(),
         2
     );
 
-    // Now remove one of the rectangles, recording this in the R-tree.
-    rtreed.remove(&1);
-
-    // Make the same query to the R-tree as before.
-    // Only one rectangle is now present.
+    // Access a polygon by its index in the MultiPolygon.
     assert_eq!(
-        rtreed
-            .rtree()
-            .locate_in_envelope(AABB::from_corners((0, 0), (2, 2)))
-            .count(),
-        1
+        rtreed.get(&0),
+        Some(&Polygon::new(
+            line_string![
+                (x: 0.0, y: 0.0),
+                (x: 1.0, y: 0.0),
+                (x: 1.0, y: 1.0),
+                (x: 0.0, y: 0.0),
+            ],
+            vec![],
+        ))
     );
 }
 ```
+
+
 
 ## Contributing
 
