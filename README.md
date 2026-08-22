@@ -4,6 +4,7 @@ SPDX-FileCopyrightText: 2025 rstared contributors
 SPDX-License-Identifier: MIT OR Apache-2.0
 -->
 
+[![Repository](https://img.shields.io/badge/repository-GitHub-0FBF3E)](https://github.com/mikwielgus/rstared)
 [![Docs](https://docs.rs/rstared/badge.svg)](https://docs.rs/rstared/)
 [![Crates.io](https://img.shields.io/crates/v/rstared.svg)](https://crates.io/crates/rstared)
 [![MIT OR Apache 2.0](https://img.shields.io/crates/l/rstared.svg)](#licence)
@@ -13,10 +14,8 @@ SPDX-License-Identifier: MIT OR Apache-2.0
 `rstared::RTreed` is a simple Rust
 [decorator](https://en.wikipedia.org/wiki/Decorator_pattern) that adds a
 passively listening R-tree,
-[`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to
-collections that implement [`maplike`](https://docs.rs/maplike/latest/maplike/)
-traits (with values that implement
-[`rstar::RTreeObject`](https://docs.rs/rstar/latest/rstar/trait.RTreeObject.html)).
+[`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to a
+large number of common standard library and third-party collection types.
 
 ## Supported collections
 
@@ -132,20 +131,34 @@ fn main() {
 
 #### `HashMap` example
 
-See also
+Because `Vec` invalidates indices upon removal, there is no `.remove()` method
+available for `RTreed<Vec<...>`. If you want to dynamically remove elements, you
+can use a type with stable keys, such as Rust standard library's `HashMap` and
+`BTreeMap`, like this:
+
+```rust-ignore
+let rect_vec: HashMap<Rectangle<(i32, i32)>> = Vec::new();
+let mut rtreed = RTreed::new(rect_vec);
+```
+
+See
 [examples/hashmap.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/multipolygon.rs)
-for a usage example on `HashMap`, which lacks a `.push()` interface but has
-`.remove()`.
+for a full usage example on `HashMap`.
+
+Of course, map types are not as fast as `Vec`s. If you want to retain most
+of `Vec`s performance while still being able to stably remove elements,
+consider using third-party collections such as `indexmap::IndexMap`,
+`stable_vec::StableVec`, `thunderdome::Arena` -- `RTreed` can decorate them just
+as well.
 
 #### `MultiPolygon` example
 
 Following is a usage example on `geo`'s
 [`MultiPolygon`](https://docs.rs/geo/latest/geo/geometry/struct.MultiPolygon.html)
 ([examples/multipolygon.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/multipolygon.rs)).
-Like `Vec`, `MultiPolygon` is pushable, so polygons are added with `.push()`
-and keyed by their index. You need to enable the `rstar_0_13` feature
-on [`geo-types`](https://docs.rs/geo-types) to have `Polygon` implement
-`RTreeObject`:
+To wrap `RTreed` over `MultiPolygon`, you need to enable the `rstar_0_13`
+feature on [`geo-types`](https://docs.rs/geo-types), so that its element type,
+`Polygon`, implements `RTreeObject`:
 
 ```rust
 use geo_types::{MultiPolygon, Point, Polygon, line_string};
