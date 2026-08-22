@@ -1,0 +1,10 @@
+// SPDX-FileCopyrightText: 2026 rstared contributors
+//
+// SPDX-License-Identifier: MIT OR Apache-2.0
+
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ]
+}
