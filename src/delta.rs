@@ -12,15 +12,12 @@ use rstar::RTreeObject;
 use crate::RTreed;
 use undoredo::{ApplyDelta, Delta};
 
-#[cfg_attr(docsrs, doc(cfg(feature = "undoredo")))]
 /// Half-delta for `RTreed<C>`. Alias for `BTreeMap<K, V>`.
 pub type RTreedHalfDelta<K, V> = BTreeMap<K, V>;
 
-#[cfg_attr(docsrs, doc(cfg(feature = "undoredo")))]
 /// Delta for `RTreed<C>`. Alias for `Delta<RTreedHalfDelta<K, V>>`.
 pub type RTreedDelta<K, V> = Delta<RTreedHalfDelta<K, V>>;
 
-#[cfg_attr(docsrs, doc(cfg(feature = "undoredo")))]
 impl<
     K: Clone + PartialEq,
     V: Clone + PartialEq + RTreeObject,
