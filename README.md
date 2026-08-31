@@ -163,7 +163,6 @@ feature on [`geo-types`](https://docs.rs/geo-types), so that its element type,
 ```rust
 # #[cfg(feature = "geo")]
 # {
-
 use geo_types::{MultiPolygon, Point, Polygon, line_string};
 use rstar::AABB;
 use rstared::RTreed;
