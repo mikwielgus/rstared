@@ -28,15 +28,17 @@ Naturally, since this library's R-tree comes from the
 elements stored in the decorated collection must still implement
 [`RTreeObject`](https://docs.rs/rstar/latest/rstar/trait.RTreeObject.html).
 
-This library is `no_std`-compatible and has no mandatory third-party
-dependencies except for [`alloc`](https://doc.rust-lang.org/alloc/).
+This library is `no_std`-compatible, is compatible with
+[`undoredo`](https://github.com/mikwielgus/undoredo), has no `unsafe`
+code, and has no mandatory third-party dependencies except for
+[`alloc`](https://doc.rust-lang.org/alloc/).
 
 ## Supported collections
 
-Internally, `rstared` is capable of decorating (wrapping) collection types
-thanks to [`maplike`](https://docs.rs/maplike/latest/maplike/), another crate
-of ours. Because of that, `rstared` supports the same set of collections as
-`maplike`, which we list below.
+`rstared` is capable of decorating (wrapping) collection types thanks to
+[`maplike`](https://docs.rs/maplike/latest/maplike/), another crate of ours.
+Because of that, `rstared` supports the same set of collections as `maplike`,
+which we list below.
 
 ### Standard library
 
@@ -95,6 +97,7 @@ rstared = { version = "0.14.2", features = [
     "bidimap",
     "geo",
     "indexmap",
+    "serde",
     "smallvec",
     "stable-vec",
     "thunderdome",
@@ -158,14 +161,19 @@ let mut rtreed = RTreed::new(rect_hashmap);
 ```
 
 See
-[examples/hashmap.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/multipolygon.rs)
+[examples/hashmap.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/hashmap.rs)
 for a full usage example on `HashMap`.
 
 Of course, map types are not as fast as `Vec`s. If you want to retain most
 of `Vec`s performance while still being able to stably remove elements,
 consider using third-party collections such as `indexmap::IndexMap`,
-`stable_vec::StableVec`, `thunderdome::Arena` -- `RTreed` can decorate them just
+`stable_vec::StableVec`, `thunderdome::Arena`. `RTreed` can decorate them just
 as well.
+
+See
+[examples/thunderdome.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/thunderdome.rs)
+for a usage example involving two polygons stored in `thunderdome::Arena`, a
+generational arena.
 
 #### `MultiPolygon` example
 

@@ -58,10 +58,15 @@ required-features = ["geo"]
 doc-scrape-examples = true
 
 [[example]]
-name = "vec"
+name = "thunderdome"
+required-features = ["thunderdome"]
 doc-scrape-examples = true
 
 [[example]]
 name = "undoredo"
 required-features = ["undoredo", "std"]
+doc-scrape-examples = true
+
+[[example]]
+name = "vec"
 doc-scrape-examples = true
