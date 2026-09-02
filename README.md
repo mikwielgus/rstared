@@ -17,6 +17,12 @@ passively listening R-tree,
 [`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to a
 large number of common standard library and third-party collection types.
 
+Naturally, the elements stored in the decorated collection must implement
+[`RTreeObject`](https://docs.rs/rstar/latest/rstar/trait.RTreeObject.html).
+
+This library is `no_std`-compatible and has no mandatory third-party
+dependencies except for [`alloc`](https://doc.rust-lang.org/alloc/).
+
 ## Supported collections
 
 ### Standard library
@@ -59,11 +65,8 @@ large number of common standard library and third-party collection types.
   [`MultiPoint`](https://docs.rs/geo/latest/geo/struct.MultiPoint.html),
   [`MultiLineString`](https://docs.rs/geo/latest/geo/struct.MultiLineString.html),
   [`MultiPolygon`](https://docs.rs/geo/latest/geo/struct.MultiPolygon.html), and
-  [`GeometryCollection`](https://docs.rs/geo/latest/geo/struct.GeometryCollection.html)
+  [`GeometryCollection`](https://docs.rs/geo/latest/geo/struct.GeometryCollection.html),
   gated by the `geo` feature;
-
-This library is `no_std`-compatible and has no mandatory third-party
-dependencies except for [`alloc`](https://doc.rust-lang.org/alloc/).
 
 ## Usage
 
@@ -136,9 +139,12 @@ available for `RTreed<Vec<...>`. If you want to dynamically remove elements, you
 can use a type with stable keys, such as Rust standard library's `HashMap` and
 `BTreeMap`, like this:
 
-```rust-ignore
+```rust
+# #[cfg(false)]
+# {
 let rect_vec: HashMap<Rectangle<(i32, i32)>> = Vec::new();
 let mut rtreed = RTreed::new(rect_vec);
+# }
 ```
 
 See
