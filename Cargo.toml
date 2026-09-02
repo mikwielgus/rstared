@@ -38,7 +38,7 @@ undoredo = { version = "0.14", features = ["rstar"], default-features = false, o
 
 [dev-dependencies]
 geo-types = { version = "0.7", features = ["rstar_0_13"] }
-rand = "0.9"
+rand = "0.10"
 stable-vec = "0.4"
 thunderdome = "0.6"
 
