@@ -15,9 +15,28 @@ SPDX-License-Identifier: MIT OR Apache-2.0
 [decorator](https://en.wikipedia.org/wiki/Decorator_pattern) that adds a
 passively listening R-tree,
 [`rstar::RTree`](https://docs.rs/rstar/0.12.2/rstar/struct.RTree.html), to a
-large number of common standard library and third-party collection types.
+considerable number of common standard library and third-party collection types.
+
+This is useful because it allows to avoid writing [glue
+code](https://en.wikipedia.org/wiki/Glue_code) to keep R-tree and collection
+elements in sync. You get spatial indexing for arbitrary collection with very
+little change to how you store or access your data -- no need to write your own
+spatial access wrapper anymore.
+
+Naturally, since this library's R-tree comes from the
+[`rstar`](https://docs.rs/rstar/latest/rstar/) crate, the
+elements stored in the decorated collection must still implement
+[`RTreeObject`](https://docs.rs/rstar/latest/rstar/trait.RTreeObject.html).
+
+This library is `no_std`-compatible and has no mandatory third-party
+dependencies except for [`alloc`](https://doc.rust-lang.org/alloc/).
 
 ## Supported collections
+
+Internally, `rstared` is capable of decorating (wrapping) collection types
+thanks to [`maplike`](https://docs.rs/maplike/latest/maplike/), another crate
+of ours. Because of that, `rstared` supports the same set of collections as
+`maplike`, which we list below.
 
 ### Standard library
 
@@ -31,7 +50,7 @@ large number of common standard library and third-party collection types.
   not feature-gated;
 - [`Vec`](https://doc.rust-lang.org/std/vec/struct.Vec.html), not feature-gated;
 - [`VecDeque`](https://doc.rust-lang.org/alloc/collections/vec_deque/struct.VecDeque.html),
-  not feature-gated.
+  not feature-gated;
 
 ### Third-party types
 
@@ -59,11 +78,8 @@ large number of common standard library and third-party collection types.
   [`MultiPoint`](https://docs.rs/geo/latest/geo/struct.MultiPoint.html),
   [`MultiLineString`](https://docs.rs/geo/latest/geo/struct.MultiLineString.html),
   [`MultiPolygon`](https://docs.rs/geo/latest/geo/struct.MultiPolygon.html), and
-  [`GeometryCollection`](https://docs.rs/geo/latest/geo/struct.GeometryCollection.html)
+  [`GeometryCollection`](https://docs.rs/geo/latest/geo/struct.GeometryCollection.html),
   gated by the `geo` feature;
-
-This library is `no_std`-compatible and has no mandatory third-party
-dependencies except for [`alloc`](https://doc.rust-lang.org/alloc/).
 
 ## Usage
 
@@ -136,9 +152,9 @@ available for `RTreed<Vec<...>`. If you want to dynamically remove elements, you
 can use a type with stable keys, such as Rust standard library's `HashMap` and
 `BTreeMap`, like this:
 
-```rust-ignore
-let rect_vec: HashMap<Rectangle<(i32, i32)>> = Vec::new();
-let mut rtreed = RTreed::new(rect_vec);
+```rust,ignore
+let rect_hashmap: HashMap<Rectangle<(i32, i32)>> = HashMap::new();
+let mut rtreed = RTreed::new(rect_hashmap);
 ```
 
 See
@@ -217,7 +233,6 @@ fn main() {
         ))
     );
 }
-
 # }
 ```
 
