@@ -32,7 +32,7 @@ tinyvec = ["maplike/tinyvec"]
 undoredo = ["dep:undoredo"]
 
 [dependencies]
-maplike = { version = "0.14", features = ["alloc", "rstar"], default-features = false }
+maplike = { version = "0.15", features = ["alloc", "rstar"], default-features = false }
 rstar = "0.13"
 undoredo = { version = "0.14", features = ["rstar"], default-features = false, optional = true }
 
