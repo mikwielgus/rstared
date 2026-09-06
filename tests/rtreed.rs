@@ -7,7 +7,7 @@
 extern crate alloc;
 
 use maplike::{
-    containers::Container,
+    abc::Keyed,
     ops::{Get, Push, Remove},
 };
 use rand::Rng;
@@ -36,7 +36,7 @@ fn test_push_and_remove_random_aars_in_thunderdome() {
 /// "AAR" stands for "axis-aligned rectangle".
 fn test_push_and_remove_random_aars<
     K: Clone + PartialEq,
-    C: Container<Key = K, Value = Rectangle<(i32, i32)>>
+    C: Keyed<Key = K, Value = Rectangle<(i32, i32)>>
         + Get<K>
         + Push<K>
         + Remove<K, Output = Option<Rectangle<(i32, i32)>>>,

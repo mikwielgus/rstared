@@ -20,5 +20,5 @@ pub use delta::*;
 mod rtreed;
 
 pub use crate::rtreed::RTreed;
-pub use maplike::containers::Container;
+pub use maplike::abc::{Container, Keyed};
 pub use maplike::ops::{Get, Insert, Push, Remove};

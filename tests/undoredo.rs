@@ -7,7 +7,7 @@
 use std::collections::HashMap;
 
 use maplike::{
-    containers::Container,
+    abc::Keyed,
     iter::IntoIter,
     ops::{Get, Insert, Remove},
 };
@@ -45,12 +45,6 @@ fn test_snapshot_undo_redo_() {
     test_snapshot_undo_redo::<i32, Rectangle<(i32, i32)>, _>(RTreed::new(rect_hashmap));
 }
 
-trait Keyed<K>: Container<Key = K> {}
-impl<T: Container<Key = K>, K> Keyed<K> for T {}
-
-trait Map<V>: Container<Value = V> {}
-impl<T: Container<Value = V>, V> Map<V> for T {}
-
 trait FromUsize {
     fn from_usize(u: usize) -> Self;
 }
@@ -69,9 +63,14 @@ impl FromUsize for usize {
 
 fn test_recorder_apply_delta_at_specified_indices<
     K: Clone + FromUsize + std::fmt::Debug + PartialEq + Ord,
-    V: Clone + FromUsize + std::fmt::Debug + PartialEq + Ord,
-    C: Keyed<K> + Map<V> + Insert<K> + Remove<K> + Get<K>,
-    DC: Clone + Keyed<K> + Map<V> + Get<K> + Insert<K> + IntoIter<K> + Remove<K, Output = Option<V>>,
+    V: Clone + FromUsize + std::fmt::Debug + PartialEq,
+    C: Keyed<Key = K, Value = V> + Insert<K> + Remove<K> + Get<K>,
+    DC: Clone
+        + Keyed<Key = K, Value = V>
+        + Get<K>
+        + Insert<K>
+        + IntoIter<K>
+        + Remove<K, Output = Option<V>>,
 >(
     mut recorder: Recorder<C, DC>,
 ) where
@@ -103,7 +102,7 @@ fn test_recorder_apply_delta_at_specified_indices<
 fn test_snapshot_undo_redo<
     K: Clone + FromUsize + std::fmt::Debug + PartialEq,
     V: Clone + FromUsize + std::fmt::Debug + PartialEq,
-    C: Keyed<K> + Map<V> + Get<K> + Insert<K> + IntoIter<K> + Remove<K> + Clone,
+    C: Keyed<Key = K, Value = V> + Get<K> + Insert<K> + IntoIter<K> + Remove<K> + Clone,
 >(
     mut container: C,
 ) {

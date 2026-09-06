@@ -4,7 +4,7 @@
 
 use alloc::collections::BTreeMap;
 
-use maplike::containers::Container;
+use maplike::abc::Keyed;
 use maplike::iter::IntoIter;
 use maplike::ops::{Get, Insert, Remove};
 use rstar::RTreeObject;
@@ -21,8 +21,8 @@ pub type RTreedDelta<K, V> = Delta<RTreedHalfDelta<K, V>>;
 impl<
     K: Clone + PartialEq,
     V: Clone + PartialEq + RTreeObject,
-    C: Get<K> + Container<Key = K, Value = V> + Insert<K> + Remove<K, Output = Option<V>>,
-    DC: IntoIter<K> + Container<Key = K, Value = V>,
+    C: Get<K> + Keyed<Key = K, Value = V> + Insert<K> + Remove<K, Output = Option<V>>,
+    DC: IntoIter<K> + Keyed<Key = K, Value = V>,
 > ApplyDelta<DC> for RTreed<C>
 {
     #[inline]
