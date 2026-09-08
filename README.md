@@ -36,7 +36,7 @@ code, and has no mandatory third-party dependencies except for
 ## Supported collections
 
 `rstared` is capable of decorating (wrapping) collection types thanks to
-[`maplike`](https://docs.rs/maplike/latest/maplike/), another crate of ours.
+[`maplike`](https://github.com/mikwielgus/maplike), another crate of ours.
 Because of that, `rstared` supports the same set of collections as `maplike`,
 which we list below.
 
