@@ -170,6 +170,8 @@ consider using third-party collections such as `indexmap::IndexMap`,
 `stable_vec::StableVec`, `thunderdome::Arena`. `RTreed` can decorate them just
 as well.
 
+#### Generational arena example
+
 See
 [examples/thunderdome.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/thunderdome.rs)
 for a usage example involving two polygons stored in `thunderdome::Arena`, a
