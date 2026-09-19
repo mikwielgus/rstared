@@ -6,7 +6,7 @@ use core::convert::AsRef;
 
 use maplike::abc::{Container, Keyed};
 use maplike::iter::IntoIter;
-use maplike::ops::{Get, Insert, Push, Remove, Set};
+use maplike::ops::{Get, Insert, Len, Push, Remove, Set, SwapRemove};
 use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
 #[derive(Clone, Debug, Default)]
@@ -171,6 +171,57 @@ where
             .remove(&GeomWithData::new(value.clone(), key.clone()));
 
         Some(value)
+    }
+}
+
+impl<V, C> SwapRemove<usize> for RTreed<C>
+where
+    V: Clone + PartialEq + RTreeObject,
+    C: Keyed<Key = usize, Value = V> + Get<usize> + Len + SwapRemove<usize, Output = V>,
+{
+    type Output = V;
+
+    #[inline]
+    fn swap_remove(&mut self, key: &usize) -> V {
+        self.swap_remove(key)
+    }
+}
+
+impl<V, C> RTreed<C>
+where
+    V: Clone + PartialEq + RTreeObject,
+    C: Keyed<Key = usize, Value = V> + Get<usize> + Len + SwapRemove<usize, Output = V>,
+{
+    #[inline]
+    pub fn swap_remove(&mut self, key: &usize) -> V {
+        let last = self
+            .collection
+            .len()
+            .checked_sub(1)
+            .expect("swap_remove index is out of bounds");
+
+        if *key == last {
+            // Since the key is the last element, there is no need to perform a
+            // swap, we only need to perform a plain remove.
+
+            let value = self.collection.swap_remove(key);
+
+            self.rtree.remove(&GeomWithData::new(value.clone(), *key));
+
+            value
+        } else {
+            let last_value = self.collection.get(&last).unwrap().clone();
+            let value = self.collection.swap_remove(key);
+
+            // Non-last swap is equivalent to two removes and an insert, which
+            // we do on R-tree here.
+            self.rtree.remove(&GeomWithData::new(value.clone(), *key));
+            self.rtree
+                .remove(&GeomWithData::new(last_value.clone(), last));
+            self.rtree.insert(GeomWithData::new(last_value, *key));
+
+            value
+        }
     }
 }
 

@@ -114,7 +114,8 @@ Remove those you don't need.
 
 Following is a basic usage example on `Vec`
 ([examples/vec.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/vec.rs)).
-`Vec` is pushable, so values are added with `.push()` and keyed by their index:
+`Vec` is pushable, so values are added with `.push()` and keyed by their index.
+Existing elements can be removed with `.swap_remove()`.
 
 ```rust
 use rstar::{AABB, primitives::Rectangle};
@@ -145,15 +146,42 @@ fn main() {
         rtreed.get(&0),
         Some(&Rectangle::from_corners((0, 0), (1, 1)))
     );
+
+    // Push one more rectangle.
+    rtreed.push(Rectangle::from_corners((2, 2), (3, 3)));
+
+    // Swap-remove the first rectangle.
+    assert_eq!(
+        rtreed.swap_remove(&0),
+        Rectangle::from_corners((0, 0), (1, 1))
+    );
+
+    // Now the latest-pushed rectangle occupies the place of the first
+    // rectangle. The second rectangle is as it was previously.
+    assert_eq!(
+        rtreed.get(&0),
+        Some(&Rectangle::from_corners((2, 2), (3, 3)))
+    );
+    assert_eq!(
+        rtreed.get(&1),
+        Some(&Rectangle::from_corners((1, 1), (2, 2)))
+    );
+    assert_eq!(
+        rtreed
+            .rtree()
+            .locate_in_envelope(AABB::from_corners((0, 0), (3, 3)))
+            .count(),
+        2
+    );
 }
 ```
 
 #### `HashMap` example
 
-Because `Vec` invalidates indices upon removal, there is no `.remove()` method
-available for `RTreed<Vec<...>`. If you want to dynamically remove elements, you
-can use a type with stable keys, such as Rust standard library's `HashMap` and
-`BTreeMap`, like this:
+Every call to `.swap_remove()` invalidates the last index. If you want to
+dynamically remove elements without key invalidation, you can use a type with
+stable keys, such as Rust standard library's `HashMap` and `BTreeMap`, like
+this:
 
 ```rust,ignore
 let rect_hashmap: HashMap<Rectangle<(i32, i32)>> = HashMap::new();
@@ -187,8 +215,8 @@ feature on [`geo-types`](https://docs.rs/geo-types), so that its element type,
 `Polygon`, implements `RTreeObject`:
 
 ```rust
-# #[cfg(feature = "geo")]
-# {
+#[cfg(feature = "geo")]
+{
 use geo_types::{MultiPolygon, Point, Polygon, line_string};
 use rstar::AABB;
 use rstared::RTreed;
@@ -243,7 +271,7 @@ fn main() {
         ))
     );
 }
-# }
+}
 ```
 
 

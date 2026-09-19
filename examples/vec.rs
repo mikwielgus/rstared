@@ -30,6 +30,33 @@ fn main() {
         rtreed.get(&0),
         Some(&Rectangle::from_corners((0, 0), (1, 1)))
     );
+
+    // Push one more rectangle.
+    rtreed.push(Rectangle::from_corners((2, 2), (3, 3)));
+
+    // Swap-remove the first rectangle.
+    assert_eq!(
+        rtreed.swap_remove(&0),
+        Rectangle::from_corners((0, 0), (1, 1))
+    );
+
+    // Now the latest-pushed rectangle occupies the place of the first
+    // rectangle. The second rectangle is as it was previously.
+    assert_eq!(
+        rtreed.get(&0),
+        Some(&Rectangle::from_corners((2, 2), (3, 3)))
+    );
+    assert_eq!(
+        rtreed.get(&1),
+        Some(&Rectangle::from_corners((1, 1), (2, 2)))
+    );
+    assert_eq!(
+        rtreed
+            .rtree()
+            .locate_in_envelope(AABB::from_corners((0, 0), (3, 3)))
+            .count(),
+        2
+    );
 }
 
 #[test]
