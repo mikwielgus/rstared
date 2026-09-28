@@ -1,0 +1,16 @@
+[package]
+name = "rstar-benches"
+version = "0.1.1"
+authors = ["Stefan Altmayer <stoeoef@gmail.com>", "The Georust Developers <mods@georust.org>"]
+edition = "2021"
+rust-version = "1.68"
+
+[dev-dependencies]
+criterion = { version = "0.8", features = ["html_reports"] }
+rand = "0.10"
+rand_hc = "0.5"
+rstar = { path = "../rstar" }
+
+[[bench]]
+name = "benchmarks"
+harness = false
