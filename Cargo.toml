@@ -62,7 +62,7 @@ doc-scrape-examples = true
 
 [[example]]
 name = "thunderdome"
-required-features = ["thunderdome"]
+required-features = ["thunderdome", "geo"]
 doc-scrape-examples = true
 
 [[example]]

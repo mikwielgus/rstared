@@ -7,7 +7,7 @@
 //! our vendored version's types are non-interchangable.
 
 use crate::primitives::Line as RstarLine;
-use crate::{AABB, Envelope, Point as RTreePoint, PointDistance, RTreeNum, RTreeObject};
+use crate::{Envelope, Point as RTreePoint, PointDistance, RTreeNum, RTreeObject, AABB};
 
 use geo_types::{Coord, Line, LineString, Point, Polygon, Rect};
 use num_traits::{Bounded, Float};
