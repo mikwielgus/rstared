@@ -118,7 +118,7 @@ Following is a basic usage example on `Vec`
 Existing elements can be removed with `.swap_remove()`.
 
 ```rust
-use rstar::{AABB, primitives::Rectangle};
+use rstared::rstar::{AABB, primitives::Rectangle};
 use rstared::RTreed;
 
 fn main() {
@@ -210,15 +210,14 @@ generational arena.
 Following is a usage example on `geo`'s
 [`MultiPolygon`](https://docs.rs/geo/latest/geo/geometry/struct.MultiPolygon.html)
 ([examples/multipolygon.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/multipolygon.rs)).
-To wrap `RTreed` over `MultiPolygon`, you need to enable the `rstar_0_13`
-feature on [`geo-types`](https://docs.rs/geo-types), so that its element type,
-`Polygon`, implements `RTreeObject`:
+Enable the `geo` feature so that [`geo-types`](https://docs.rs/geo-types)
+`Polygon` implements `RTreeObject` via the vendored `rstar`:
 
 ```rust
 #[cfg(feature = "geo")]
 {
 use geo_types::{MultiPolygon, Point, Polygon, line_string};
-use rstar::AABB;
+use rstared::rstar::AABB;
 use rstared::RTreed;
 
 fn main() {

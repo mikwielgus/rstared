@@ -11,8 +11,8 @@ use maplike::{
     ops::{Get, Push, Remove},
 };
 use rand::Rng;
-use rstar::{AABB, primitives::Rectangle};
 use rstared::RTreed;
+use rstared::rstar::{AABB, primitives::Rectangle};
 
 #[cfg(feature = "stable-vec")]
 #[test]

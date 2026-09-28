@@ -4,7 +4,7 @@
 
 use std::collections::HashMap;
 
-use rstar::{AABB, primitives::Rectangle};
+use rstared::rstar::{AABB, primitives::Rectangle};
 use rstared::{RTreed, RTreedDelta, RTreedHalfDelta};
 use undoredo::{Recorder, UndoRedo};
 

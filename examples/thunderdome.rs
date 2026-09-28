@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 use geo_types::{Point, Polygon, line_string};
-use rstar::AABB;
 use rstared::RTreed;
+use rstared::rstar::AABB;
 use thunderdome::Arena;
 
 fn main() {

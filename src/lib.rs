@@ -22,3 +22,4 @@ mod rtreed;
 pub use crate::rtreed::RTreed;
 pub use maplike::abc::{Container, Keyed};
 pub use maplike::ops::{Get, Insert, Push, Remove, SwapRemove};
+pub use rstar;

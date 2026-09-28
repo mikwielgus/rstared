@@ -11,8 +11,8 @@ use maplike::{
     iter::IntoIter,
     ops::{Get, Insert, Remove},
 };
-use rstar::primitives::Rectangle;
 use rstared::RTreed;
+use rstared::rstar::primitives::Rectangle;
 use std::collections::BTreeMap;
 use undoredo::aliases::BTreeMapHalfDelta;
 use undoredo::{ApplyDelta, Delta, HistoryTree, Recorder, Snapshot, UndoRedo};

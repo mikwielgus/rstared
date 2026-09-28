@@ -4,8 +4,8 @@
 
 use std::collections::HashMap;
 
-use rstar::{AABB, primitives::Rectangle};
 use rstared::RTreed;
+use rstared::rstar::{AABB, primitives::Rectangle};
 
 fn main() {
     // A hashmap of 2D rectangles will be the underlying collection.

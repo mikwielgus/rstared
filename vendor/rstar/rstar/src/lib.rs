@@ -48,6 +48,9 @@ mod rtree;
 #[cfg(feature = "mint")]
 pub mod mint;
 
+#[cfg(feature = "geo-types")]
+mod geo_types;
+
 #[cfg(test)]
 mod test_utilities;
 

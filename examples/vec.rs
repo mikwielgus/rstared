@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
-use rstar::{AABB, primitives::Rectangle};
 use rstared::RTreed;
+use rstared::rstar::{AABB, primitives::Rectangle};
 
 fn main() {
     // A vec of 2D rectangles will be the underlying collection.

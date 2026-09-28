@@ -23,7 +23,7 @@ default = ["std"]
 std = ["maplike/std"]
 arrayvec = ["maplike/arrayvec"]
 bidimap = ["maplike/bidimap"]
-geo = ["maplike/geo"]
+geo = ["maplike/geo", "rstar/geo-types"]
 indexmap = ["maplike/indexmap"]
 smallvec = ["maplike/smallvec"]
 stable-vec = ["maplike/stable-vec"]
@@ -33,14 +33,17 @@ undoredo = ["dep:undoredo"]
 
 [dependencies]
 maplike = { version = "0.15", features = ["alloc", "rstar"], default-features = false }
-rstar = "0.13"
+rstar = { path = "vendor/rstar/rstar", version = "0.13" }
 undoredo = { version = "0.15", features = ["rstar"], default-features = false, optional = true }
 
 [dev-dependencies]
-geo-types = { version = "0.7", features = ["rstar_0_13"] }
+geo-types = "0.7"
 rand = "0.9"
 stable-vec = "0.4"
 thunderdome = "0.6"
+
+[patch.crates-io]
+rstar = { path = "vendor/rstar/rstar" }
 
 # Use scraped examples.
 [package.metadata.docs.rs]
