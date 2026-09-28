@@ -7,9 +7,6 @@ use crate::point::Point;
 #[cfg(not(test))]
 use alloc::{vec, vec::Vec};
 
-#[allow(unused_imports)] // Import is required when building without std
-use num_traits::Float;
-
 use super::cluster_group_iterator::{calculate_number_of_clusters_on_axis, ClusterGroupIterator};
 
 fn bulk_load_recursive<T, Params>(mut elements: Vec<T>) -> ParentNode<T>

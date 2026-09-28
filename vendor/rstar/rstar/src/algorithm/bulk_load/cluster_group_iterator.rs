@@ -3,8 +3,8 @@ use crate::{Envelope, Point, RTreeObject, RTreeParams};
 #[cfg(not(test))]
 use alloc::vec::Vec;
 
-#[allow(unused_imports)] // Import is required when building without std
-use num_traits::Float;
+#[allow(unused_imports)] // Required when building without std
+use numlike::fns::{Ceil, Floor, Log, Pow};
 
 /// Partitions elements into groups of clusters along a specific axis.
 pub struct ClusterGroupIterator<T: RTreeObject> {
@@ -69,13 +69,13 @@ where
     // The depth of the resulting tree, assuming all leaf nodes will be filled up to MAX_SIZE
     let depth = (number_of_elements as f32).log(max_size).ceil() as i32;
     // The number of elements each subtree will hold
-    let n_subtree = max_size.powi(depth - 1);
+    let n_subtree = max_size.pow(depth - 1);
     // How many clusters will this node contain
     let number_of_clusters = (number_of_elements as f32 / n_subtree).ceil();
 
     let max_dimension = <T::Envelope as Envelope>::Point::DIMENSIONS as f32;
     // Try to split all clusters among all dimensions as evenly as possible by taking the nth root.
-    number_of_clusters.powf(1. / max_dimension).floor() as usize
+    number_of_clusters.pow(1. / max_dimension).floor() as usize
 }
 
 #[cfg(test)]

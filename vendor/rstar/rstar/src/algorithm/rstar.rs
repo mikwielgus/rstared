@@ -7,7 +7,8 @@ use crate::{envelope::Envelope, object::Distance};
 
 #[cfg(not(test))]
 use alloc::vec::Vec;
-use num_traits::{Bounded, Zero};
+use numlike::elem::Zero;
+use numlike::limits::MaxExtended;
 
 /// Inserts points according to the r-star heuristic.
 ///
@@ -160,10 +161,10 @@ where
         None | Some(RTreeNode::Leaf(_)) => return usize::MAX,
     };
 
-    let zero: Distance<T> = Zero::zero();
+    let zero: Distance<T> = Zero::ZERO;
     let insertion_envelope = to_insert.envelope();
     let mut inclusion_count = 0;
-    let mut min_area = Distance::<T>::max_value();
+    let mut min_area = Distance::<T>::MAX_EXTENDED;
     let mut min_index = 0;
     for (index, child) in node.children.iter().enumerate() {
         let envelope = child.envelope();
@@ -250,7 +251,7 @@ where
     Params: RTreeParams,
 {
     let axis = get_split_axis::<_, Params>(node);
-    let zero = Distance::<T>::zero();
+    let zero = Distance::<T>::ZERO;
     debug_assert!(node.children.len() >= 2);
     // Sort along axis
     T::Envelope::sort_envelopes(axis, &mut node.children);
@@ -287,7 +288,7 @@ where
     T: RTreeObject,
     Params: RTreeParams,
 {
-    let mut best_goodness = Distance::<T>::max_value();
+    let mut best_goodness = Distance::<T>::MAX_EXTENDED;
     let mut best_axis = 0;
     let min_size = Params::MIN_SIZE;
     let until = node.children.len() - min_size + 1;

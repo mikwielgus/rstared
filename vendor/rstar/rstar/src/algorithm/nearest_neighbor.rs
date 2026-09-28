@@ -13,7 +13,7 @@ use alloc::collections::BinaryHeap;
 use alloc::{vec, vec::Vec};
 use core::mem::replace;
 use heapless::binary_heap as static_heap;
-use num_traits::Bounded;
+use numlike::limits::MaxExtended;
 
 struct RTreeNodeDistanceWrapper<'a, T>
 where
@@ -272,7 +272,7 @@ where
     }
 
     // Calculate smallest minmax-distance
-    let mut smallest_min_max: Distance<T> = Bounded::max_value();
+    let mut smallest_min_max: Distance<T> = Distance::<T>::MAX_EXTENDED;
     let mut nodes = SmallHeap::new();
     extend_heap(&mut nodes, node, &query_point, &mut smallest_min_max);
     while let Some(current) = nodes.pop() {

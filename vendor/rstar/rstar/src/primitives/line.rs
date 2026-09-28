@@ -3,7 +3,7 @@ use crate::object::PointDistance;
 use crate::object::RTreeObject;
 use crate::point::{Point, PointExt};
 use crate::{aabb::AABB, object::Distance};
-use num_traits::{One, Zero};
+use numlike::elem::{One, Zero};
 
 /// A line defined by a start and and end point.
 ///
@@ -87,9 +87,9 @@ where
         let (p1, p2) = (self.from.clone(), self.to.clone());
         let dir = p2.sub(&p1);
         let s = self.project_point(query_point);
-        if P::Scalar::zero() < s && s < One::one() {
+        if P::Scalar::ZERO < s && s < One::ONE {
             p1.add(&dir.mul(s))
-        } else if s <= P::Scalar::zero() {
+        } else if s <= P::Scalar::ZERO {
             p1
         } else {
             p2

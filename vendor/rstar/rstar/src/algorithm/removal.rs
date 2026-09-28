@@ -9,8 +9,8 @@ use crate::{Envelope, RTree};
 #[cfg(not(test))]
 use alloc::{vec, vec::Vec};
 
-#[allow(unused_imports)] // Import is required when building without std
-use num_traits::Float;
+#[allow(unused_imports)] // Required when building without std
+use numlike::fns::{Ceil, Log};
 
 /// Iterator returned by `impl IntoIter for RTree`.
 ///

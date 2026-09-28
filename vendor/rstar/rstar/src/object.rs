@@ -5,6 +5,8 @@ use crate::aabb::AABB;
 use crate::envelope::Envelope;
 use crate::point::{Point, PointExt};
 
+use numlike::elem::Zero;
+
 /// Type alias for distance scalar types derived from `PointDistance` objects
 #[allow(type_alias_bounds)]
 pub(crate) type Distance<T: PointDistance> = <<T::Envelope as Envelope>::Point as Point>::Scalar;
@@ -167,7 +169,7 @@ pub trait PointDistance: RTreeObject {
     /// contained within `self`. Changing this default behavior is advised if calculating the squared distance
     /// is more computationally expensive than a point containment check.
     fn contains_point(&self, point: &<Self::Envelope as Envelope>::Point) -> bool {
-        self.distance_2(point) <= num_traits::zero()
+        self.distance_2(point) <= Zero::ZERO
     }
 
     /// Returns the squared distance to this object, or `None` if the distance

@@ -9,12 +9,11 @@
 use crate::primitives::Line as RstarLine;
 use crate::{Envelope, Point as RTreePoint, PointDistance, RTreeNum, RTreeObject, AABB};
 
-use geo_types::{Coord, Line, LineString, Point, Polygon, Rect};
-use num_traits::{Bounded, Float};
+use geo_types::{Coord, CoordNum, Line, LineString, Point, Polygon, Rect};
 
 impl<T> RTreePoint for Coord<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     type Scalar = T;
 
@@ -46,7 +45,7 @@ where
 
 impl<T> RTreePoint for Point<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     type Scalar = T;
 
@@ -75,7 +74,7 @@ where
 
 impl<T> RTreeObject for Line<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     type Envelope = AABB<Point<T>>;
 
@@ -86,7 +85,7 @@ where
 
 impl<T> PointDistance for Line<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     fn distance_2(&self, point: &Point<T>) -> T {
         RstarLine::new(self.start_point(), self.end_point()).distance_2(point)
@@ -95,7 +94,7 @@ where
 
 impl<T> RTreeObject for LineString<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     type Envelope = AABB<Point<T>>;
 
@@ -104,8 +103,8 @@ where
 
         let Some(first) = iter.next() else {
             return AABB::from_corners(
-                Point::new(Bounded::min_value(), Bounded::min_value()),
-                Point::new(Bounded::max_value(), Bounded::max_value()),
+                Point::new(T::MIN_EXTENDED, T::MIN_EXTENDED),
+                Point::new(T::MAX_EXTENDED, T::MAX_EXTENDED),
             );
         };
 
@@ -121,22 +120,28 @@ where
 
 impl<T> PointDistance for LineString<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     fn distance_2(&self, point: &Point<T>) -> T {
         if self.0.is_empty() {
-            return T::zero();
+            return T::ZERO;
         }
 
         self.lines()
             .map(|line| RstarLine::new(line.start_point(), line.end_point()).distance_2(point))
-            .fold(T::infinity(), |accum, distance| accum.min(distance))
+            .fold(T::MAX_EXTENDED, |accum, distance| {
+                if distance < accum {
+                    distance
+                } else {
+                    accum
+                }
+            })
     }
 }
 
 impl<T> RTreeObject for Polygon<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     type Envelope = AABB<Point<T>>;
 
@@ -147,7 +152,7 @@ where
 
 impl<T> RTreeObject for Rect<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     type Envelope = AABB<Point<T>>;
 
@@ -158,7 +163,7 @@ where
 
 impl<T> PointDistance for Rect<T>
 where
-    T: Float + RTreeNum,
+    T: CoordNum + RTreeNum,
 {
     fn distance_2(&self, point: &Point<T>) -> T {
         self.envelope().distance_2(point)

@@ -1,5 +1,7 @@
 use core::fmt::Debug;
-use num_traits::{Bounded, Num, Signed, Zero};
+use numlike::alg::PofieldElem;
+use numlike::elem::Zero;
+use numlike::limits::ExtendedBounds;
 
 /// Defines a number type that is compatible with rstar.
 ///
@@ -8,96 +10,11 @@ use num_traits::{Bounded, Num, Signed, Zero};
 ///  - [Wrapping](core::num::Wrapping) versions of the above
 ///  - f32, f64
 ///
-/// This type cannot be implemented directly. Instead, it is required to implement
-/// all required traits from the `num_traits` crate.
-///
-/// # Example
-/// ```
-/// # extern crate num_traits;
-/// use num_traits::{Bounded, Num, Signed};
-///
-/// #[derive(Clone, Copy, PartialEq, PartialOrd, Debug)]
-/// struct MyFancyNumberType(f32);
-///
-/// impl num_traits::Bounded for MyFancyNumberType {
-///   // ... details hidden ...
-/// # fn min_value() -> Self { Self(Bounded::min_value()) }
-/// #
-/// # fn max_value() -> Self { Self(Bounded::max_value()) }
-/// }
-///
-/// impl Signed for MyFancyNumberType {
-///   // ... details hidden ...
-/// # fn abs(&self) -> Self { unimplemented!() }
-/// #
-/// # fn abs_sub(&self, other: &Self) -> Self { unimplemented!() }
-/// #
-/// # fn signum(&self) -> Self { unimplemented!() }
-/// #
-/// # fn is_positive(&self) -> bool { unimplemented!() }
-/// #
-/// # fn is_negative(&self) -> bool { unimplemented!() }
-/// }
-///
-/// impl Num for MyFancyNumberType {
-///   // ... details hidden ...
-/// # type FromStrRadixErr = num_traits::ParseFloatError;
-/// # fn from_str_radix(str: &str, radix: u32) -> Result<Self, Self::FromStrRadixErr> { unimplemented!() }
-/// }
-///
-/// // Lots of traits are still missing to make the above code compile, but
-/// // let's assume they're implemented. `MyFancyNumberType` type now readily implements
-/// // RTreeNum and can be used with r-trees:
-/// # fn main() {
-/// use rstar::RTree;
-/// let mut rtree = RTree::new();
-/// rtree.insert([MyFancyNumberType(0.0), MyFancyNumberType(0.0)]);
-/// # }
-///
-/// # impl num_traits::Zero for MyFancyNumberType {
-/// #   fn zero() -> Self { unimplemented!() }
-/// #   fn is_zero(&self) -> bool { unimplemented!() }
-/// # }
-/// #
-/// # impl num_traits::One for MyFancyNumberType {
-/// #   fn one() -> Self { unimplemented!() }
-/// # }
-/// #
-/// # impl core::ops::Mul for MyFancyNumberType {
-/// #   type Output = Self;
-/// #   fn mul(self, rhs: Self) -> Self { unimplemented!() }
-/// # }
-/// #
-/// # impl core::ops::Add for MyFancyNumberType {
-/// #   type Output = Self;
-/// #   fn add(self, rhs: Self) -> Self { unimplemented!() }
-/// # }
-/// #
-/// # impl core::ops::Sub for MyFancyNumberType {
-/// #   type Output = Self;
-/// #   fn sub(self, rhs: Self) -> Self { unimplemented!() }
-/// # }
-/// #
-/// # impl core::ops::Div for MyFancyNumberType {
-/// #   type Output = Self;
-/// #   fn div(self, rhs: Self) -> Self { unimplemented!() }
-/// # }
-/// #
-/// # impl core::ops::Rem for MyFancyNumberType {
-/// #   type Output = Self;
-/// #   fn rem(self, rhs: Self) -> Self { unimplemented!() }
-/// # }
-/// #
-/// # impl core::ops::Neg for MyFancyNumberType {
-/// #   type Output = Self;
-/// #   fn neg(self) -> Self { unimplemented!() }
-/// # }
-/// #
-/// ```
-///
-pub trait RTreeNum: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug {}
-
-impl<S> RTreeNum for S where S: Bounded + Num + Clone + Copy + Signed + PartialOrd + Debug {}
+/// This type cannot be implemented directly since it has a blanket
+/// implementation. Instead, implement all the required traits from the
+/// [`numlike`](https://docs.rs/numlike) crate.
+pub trait RTreeNum: ExtendedBounds + PofieldElem + Clone + Copy + Debug {}
+impl<S> RTreeNum for S where S: ExtendedBounds + PofieldElem + Clone + Copy + Debug {}
 
 /// Defines a point type that is compatible with rstar.
 ///
@@ -184,7 +101,7 @@ impl<T> PointExt for T where T: Point {}
 pub trait PointExt: Point {
     /// Returns a new Point with all components set to zero.
     fn new() -> Self {
-        Self::from_value(Zero::zero())
+        Self::from_value(Self::Scalar::ZERO)
     }
 
     /// Applies `f` to each pair of components of `self` and `other`.
@@ -208,7 +125,7 @@ pub trait PointExt: Point {
     /// Returns the dot product of `self` and `rhs`.
     fn dot(&self, rhs: &Self) -> Self::Scalar {
         self.component_wise(rhs, |l, r| l * r)
-            .fold(Zero::zero(), |acc, val| acc + val)
+            .fold(Self::Scalar::ZERO, |acc, val| acc + val)
     }
 
     /// Folds (aka reduces or injects) the Point component wise using `f` and returns the result.
@@ -239,7 +156,7 @@ pub trait PointExt: Point {
 
     /// Returns the squared length of this Point as if it was a vector.
     fn length_2(&self) -> Self::Scalar {
-        self.fold(Zero::zero(), |acc, cur| cur * cur + acc)
+        self.fold(Self::Scalar::ZERO, |acc, cur| cur * cur + acc)
     }
 
     /// Substracts `other` from `self` component wise.
