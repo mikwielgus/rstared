@@ -46,7 +46,7 @@ undoredo = { version = "0.15", default-features = false, optional = true }
 [dev-dependencies]
 approx = "0.5"
 geo-types = { version = "0.7", default-features = false }
-nalgebra = { version = "0.33", default-features = false, features = ["std", "mint"] }
+nalgebra = { version = "0.35", default-features = false, features = ["std", "mint"] }
 rand = "0.10"
 rand_hc = "0.5"
 serde_json = "1.0"
