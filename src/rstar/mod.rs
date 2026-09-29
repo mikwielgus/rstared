@@ -34,7 +34,10 @@
 
 mod aabb;
 mod algorithm;
+#[cfg(feature = "undoredo")]
+mod delta;
 mod envelope;
+mod maplike;
 mod node;
 mod object;
 mod params;
@@ -60,5 +63,8 @@ pub use crate::rstar::object::{PointDistance, RTreeObject};
 pub use crate::rstar::params::{DefaultParams, InsertionStrategy, RTreeParams};
 pub use crate::rstar::point::{Point, RTreeNum};
 pub use crate::rstar::rtree::RTree;
+
+#[cfg(feature = "undoredo")]
+pub use crate::rstar::delta::{RTreeDelta, RTreeHalfDelta};
 
 pub use crate::rstar::algorithm::iterators;
