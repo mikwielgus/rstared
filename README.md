@@ -211,7 +211,7 @@ Following is a usage example on `geo`'s
 [`MultiPolygon`](https://docs.rs/geo/latest/geo/geometry/struct.MultiPolygon.html)
 ([examples/multipolygon.rs](https://github.com/mikwielgus/rstared/blob/develop/examples/multipolygon.rs)).
 Enable the `geo` feature so that [`geo-types`](https://docs.rs/geo-types)
-`Polygon` implements `RTreeObject` via the vendored `rstar`:
+`Polygon` implements `RTreeObject` via the vendored `rstared::rstar`:
 
 ```rust
 #[cfg(feature = "geo")]

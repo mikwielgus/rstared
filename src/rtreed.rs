@@ -4,10 +4,10 @@
 
 use core::convert::AsRef;
 
+use crate::rstar::{RTree, RTreeObject, primitives::GeomWithData};
 use maplike::abc::{Container, Keyed};
 use maplike::iter::IntoIter;
 use maplike::ops::{Get, Insert, Len, Push, Remove, Set, SwapRemove};
-use rstar::{RTree, RTreeObject, primitives::GeomWithData};
 
 #[derive(Clone, Debug, Default)]
 pub struct RTreed<C: Keyed>

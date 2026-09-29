@@ -4,10 +4,10 @@
 
 use alloc::collections::BTreeMap;
 
+use crate::rstar::RTreeObject;
 use maplike::abc::Keyed;
 use maplike::iter::IntoIter;
 use maplike::ops::{Get, Insert, Remove};
-use rstar::RTreeObject;
 
 use crate::RTreed;
 use undoredo::{ApplyDelta, Delta};
