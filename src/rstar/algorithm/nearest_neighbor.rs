@@ -253,11 +253,13 @@ where
                         None
                     }
                 }
-                RTreeNode::Leaf(t) => t.distance_2_if_less_or_equal(query_point, *min_max_distance),
+                RTreeNode::Leaf(t) => {
+                    t.distance_2_if_less_or_equal(query_point, min_max_distance.clone())
+                }
             };
             if let Some(distance) = distance_if_less_or_equal {
                 *min_max_distance = min_inline(
-                    *min_max_distance,
+                    min_max_distance.clone(),
                     child.envelope().min_max_dist_2(query_point),
                 );
                 nodes.push(RTreeNodeDistanceWrapper {
