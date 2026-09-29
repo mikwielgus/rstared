@@ -10,7 +10,7 @@ use maplike::{
     abc::Keyed,
     ops::{Get, Push, Remove},
 };
-use rand::Rng;
+use rand::RngExt;
 use rstared::RTreed;
 use rstared::rstar::{AABB, primitives::Rectangle};
 
