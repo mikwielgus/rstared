@@ -1,4 +1,4 @@
-use numlike::alg::PofieldElem;
+use numlike::alg::Pofield;
 use numlike::elem::Zero;
 use numlike::limits::ExtendedBounds;
 
@@ -12,8 +12,8 @@ use numlike::limits::ExtendedBounds;
 /// This type cannot be implemented directly since it has a blanket
 /// implementation. Instead, implement all the required traits from the
 /// [`numlike`](https://docs.rs/numlike) crate.
-pub trait RTreeNum: ExtendedBounds + PofieldElem + Clone {}
-impl<S> RTreeNum for S where S: ExtendedBounds + PofieldElem + Clone {}
+pub trait RTreeNum: ExtendedBounds + Pofield + Clone {}
+impl<S> RTreeNum for S where S: ExtendedBounds + Pofield + Clone {}
 
 /// Defines a point type that is compatible with rstar.
 ///
