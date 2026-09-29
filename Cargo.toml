@@ -34,7 +34,7 @@ tinyvec = ["maplike/tinyvec"]
 undoredo = ["dep:undoredo"]
 
 [dependencies]
-heapless = { version = "0.8", default-features = false }
+heapless = { version = "0.9", default-features = false }
 maplike = { version = "0.15", features = ["alloc"], default-features = false }
 numlike = { version = "0.5", default-features = false, features = ["libm"] }
 smallvec = "1.6"
