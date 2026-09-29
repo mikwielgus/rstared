@@ -201,7 +201,7 @@ where
     }
 
     fn should_unpack_leaf(&self, leaf: &T) -> bool {
-        leaf.distance_2_if_less_or_equal(&self.circle_origin, self.squared_max_distance)
+        leaf.distance_2_if_less_or_equal(&self.circle_origin, self.squared_max_distance.clone())
             .is_some()
     }
 }

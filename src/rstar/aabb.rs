@@ -171,7 +171,7 @@ where
         let zero = P::Scalar::ZERO;
         let one = P::Scalar::ONE;
         let diag = self.upper.sub(&self.lower);
-        diag.fold(one, |acc, cur| max_inline(cur, zero) * acc)
+        diag.fold(one, |acc, cur| max_inline(cur, zero.clone()) * acc)
     }
 
     fn distance_2(&self, point: &P) -> P::Scalar {
@@ -187,13 +187,13 @@ where
         for i in 0..P::DIMENSIONS {
             let mut min = l.nth(i);
             let mut max = u.nth(i);
-            max = max * max;
-            min = min * min;
+            max = max.clone() * max;
+            min = min.clone() * min;
             if max < min {
                 core::mem::swap(&mut min, &mut max);
             }
 
-            let diff = max - min;
+            let diff = max.clone() - min.clone();
             *result.nth_mut(i) = max;
 
             if diff >= max_diff.0 {
@@ -207,8 +207,9 @@ where
 
     fn center(&self) -> Self::Point {
         let one = <Self::Point as Point>::Scalar::ONE;
-        let two = one + one;
-        self.lower.component_wise(&self.upper, |x, y| (x + y) / two)
+        let two = one.clone() + one;
+        self.lower
+            .component_wise(&self.upper, |x, y| (x + y) / two.clone())
     }
 
     fn intersection_area(&self, other: &Self) -> <Self::Point as Point>::Scalar {
@@ -222,7 +223,7 @@ where
     fn perimeter_value(&self) -> P::Scalar {
         let diag = self.upper.sub(&self.lower);
         let zero = P::Scalar::ZERO;
-        max_inline(diag.fold(zero, |acc, value| acc + value), zero)
+        max_inline(diag.fold(zero.clone(), |acc, value| acc + value), zero)
     }
 
     fn sort_envelopes<T: RTreeObject<Envelope = Self>>(axis: usize, envelopes: &mut [T]) {

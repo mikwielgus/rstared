@@ -178,7 +178,7 @@ where
     }
     if inclusion_count == 0 {
         // No inclusion found, subtree depends on overlap and area increase
-        let mut min = (zero, zero, zero);
+        let mut min = (zero.clone(), zero.clone(), zero.clone());
 
         for (index1, child1) in node.children.iter().enumerate() {
             let envelope = child1.envelope();
@@ -186,8 +186,8 @@ where
             new_envelope.merge(&insertion_envelope);
             let overlap_increase = if all_leaves {
                 // Calculate minimal overlap increase
-                let mut overlap = zero;
-                let mut new_overlap = zero;
+                let mut overlap = zero.clone();
+                let mut new_overlap = zero.clone();
                 for (index2, child2) in node.children.iter().enumerate() {
                     if index2 != index1 {
                         let child_envelope = child2.envelope();
@@ -200,11 +200,11 @@ where
                 new_overlap - overlap
             } else {
                 // Don't calculate overlap increase if not all children are leaves
-                zero
+                zero.clone()
             };
             // Calculate area increase and area
             let area = new_envelope.area();
-            let area_increase = area - envelope.area();
+            let area_increase = area.clone() - envelope.area();
             let new_min = (overlap_increase, area_increase, area);
             if new_min < min || index1 == 0 {
                 min = new_min;
@@ -254,7 +254,7 @@ where
     debug_assert!(node.children.len() >= 2);
     // Sort along axis
     T::Envelope::sort_envelopes(axis, &mut node.children);
-    let mut best = (zero, zero);
+    let mut best = (zero.clone(), zero);
     let min_size = Params::MIN_SIZE;
     let mut best_index = min_size;
 

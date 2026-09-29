@@ -1,4 +1,3 @@
-use core::fmt::Debug;
 use numlike::alg::PofieldElem;
 use numlike::elem::Zero;
 use numlike::limits::ExtendedBounds;
@@ -13,8 +12,8 @@ use numlike::limits::ExtendedBounds;
 /// This type cannot be implemented directly since it has a blanket
 /// implementation. Instead, implement all the required traits from the
 /// [`numlike`](https://docs.rs/numlike) crate.
-pub trait RTreeNum: ExtendedBounds + PofieldElem + Clone + Copy + Debug {}
-impl<S> RTreeNum for S where S: ExtendedBounds + PofieldElem + Clone + Copy + Debug {}
+pub trait RTreeNum: ExtendedBounds + PofieldElem + Clone {}
+impl<S> RTreeNum for S where S: ExtendedBounds + PofieldElem + Clone {}
 
 /// Defines a point type that is compatible with rstar.
 ///
@@ -72,7 +71,7 @@ impl<S> RTreeNum for S where S: ExtendedBounds + PofieldElem + Clone + Copy + De
 ///   }
 /// }
 /// ```
-pub trait Point: Clone + PartialEq + Debug {
+pub trait Point: Clone + PartialEq + core::fmt::Debug {
     /// The number type used by this point type.
     type Scalar: RTreeNum;
 
@@ -141,7 +140,7 @@ pub trait PointExt: Point {
 
     /// Returns a Point with every component set to `value`.
     fn from_value(value: Self::Scalar) -> Self {
-        Self::generate(|_| value)
+        Self::generate(|_| value.clone())
     }
 
     /// Returns a Point with each component set to the smallest of each component pair of `self` and `other`.
@@ -156,7 +155,7 @@ pub trait PointExt: Point {
 
     /// Returns the squared length of this Point as if it was a vector.
     fn length_2(&self) -> Self::Scalar {
-        self.fold(Self::Scalar::ZERO, |acc, cur| cur * cur + acc)
+        self.fold(Self::Scalar::ZERO, |acc, cur| cur.clone() * cur + acc)
     }
 
     /// Substracts `other` from `self` component wise.
@@ -171,7 +170,7 @@ pub trait PointExt: Point {
 
     /// Multiplies `self` with `scalar` component wise.
     fn mul(&self, scalar: Self::Scalar) -> Self {
-        self.map(|coordinate| coordinate * scalar)
+        self.map(|coordinate| coordinate * scalar.clone())
     }
 
     /// Applies `f` to `self` component wise.
@@ -203,7 +202,7 @@ where
 
 impl<S, const N: usize> Point for [S; N]
 where
-    S: RTreeNum,
+    S: RTreeNum + core::fmt::Debug,
 {
     type Scalar = S;
 
@@ -222,7 +221,7 @@ where
 
     #[inline]
     fn nth(&self, index: usize) -> Self::Scalar {
-        self[index]
+        self[index].clone()
     }
 
     #[inline]
@@ -247,7 +246,7 @@ macro_rules! impl_point_for_tuple {
     ($($index:expr => $name:ident),+) => {
         impl<S> Point for ($(fixed_type!($index, S),)+)
         where
-            S: RTreeNum
+            S: RTreeNum + core::fmt::Debug
         {
             type Scalar = S;
 
@@ -262,7 +261,7 @@ macro_rules! impl_point_for_tuple {
                 let ($($name,)+) = self;
 
                 match index {
-                    $($index => *$name,)+
+                    $($index => $name.clone(),)+
                     _ => unreachable!("index {} out of bounds for tuple", index),
                 }
             }

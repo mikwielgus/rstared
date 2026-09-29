@@ -32,7 +32,7 @@
 
 use crate::rstar::{Point, RTreeNum};
 
-impl<T: RTreeNum> Point for mint::Point2<T> {
+impl<T: RTreeNum + core::fmt::Debug> Point for mint::Point2<T> {
     type Scalar = T;
 
     const DIMENSIONS: usize = 2;
@@ -46,8 +46,8 @@ impl<T: RTreeNum> Point for mint::Point2<T> {
 
     fn nth(&self, index: usize) -> Self::Scalar {
         match index {
-            0 => self.x,
-            1 => self.y,
+            0 => self.x.clone(),
+            1 => self.y.clone(),
             _ => unreachable!(),
         }
     }
@@ -61,7 +61,7 @@ impl<T: RTreeNum> Point for mint::Point2<T> {
     }
 }
 
-impl<T: RTreeNum> Point for mint::Point3<T> {
+impl<T: RTreeNum + core::fmt::Debug> Point for mint::Point3<T> {
     type Scalar = T;
 
     const DIMENSIONS: usize = 3;
@@ -76,9 +76,9 @@ impl<T: RTreeNum> Point for mint::Point3<T> {
 
     fn nth(&self, index: usize) -> Self::Scalar {
         match index {
-            0 => self.x,
-            1 => self.y,
-            2 => self.z,
+            0 => self.x.clone(),
+            1 => self.y.clone(),
+            2 => self.z.clone(),
             _ => unreachable!(),
         }
     }
