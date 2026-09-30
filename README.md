@@ -92,7 +92,7 @@ that gate the collections you are going to use:
 
 ```toml
 [dependencies]
-rstared = { version = "0.15.3", features = [
+rstared = { version = "0.15.4", features = [
     "arrayvec",
     "bidimap",
     "geo",
