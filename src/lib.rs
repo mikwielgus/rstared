@@ -22,4 +22,7 @@ mod rtreed;
 pub use crate::rtreed::RTreed;
 pub use maplike;
 
-pub mod rstar;
+//pub mod rstar;
+mod rstar;
+
+pub use rstar::*;

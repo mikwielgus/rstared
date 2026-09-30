@@ -9,8 +9,8 @@ use crate::rstar::{AABB, Point, PointDistance, RTreeObject};
 ///
 /// # Example
 /// ```
-/// use rstared::rstar::{RTree, PointDistance};
-/// use rstared::rstar::primitives::PointWithData;
+/// use rstared::{RTree, PointDistance};
+/// use rstared::primitives::PointWithData;
 ///
 /// type RestaurantLocation = PointWithData<&'static str, [f64; 2]>;
 ///

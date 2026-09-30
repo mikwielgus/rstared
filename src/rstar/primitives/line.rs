@@ -13,8 +13,8 @@ use numlike::elem::{One, Zero};
 ///
 /// # Example
 /// ```
-/// use rstared::rstar::primitives::Line;
-/// use rstared::rstar::{RTree, RTreeObject};
+/// use rstared::primitives::Line;
+/// use rstared::{RTree, RTreeObject};
 ///
 /// let line_1 = Line::new([0.0, 0.0], [1.0, 1.0]);
 /// let line_2 = Line::new([0.0, 0.0], [-1.0, 1.0]);
@@ -57,7 +57,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::primitives::Line;
+    /// use rstared::primitives::Line;
     ///
     /// let line = Line::new([3, 3], [7, 6]);
     /// assert_eq!(line.length_2(), 25);
@@ -76,7 +76,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::primitives::Line;
+    /// use rstared::primitives::Line;
     ///
     /// let line = Line::new([0.0, 0.0], [1., 1.]);
     /// assert_eq!(line.nearest_point(&[0.0, 0.0]), [0.0, 0.0]);

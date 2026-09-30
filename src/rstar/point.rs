@@ -30,7 +30,7 @@ impl<S> RTreeNum for S where S: ExtendedBounds + Pofield + Clone {}
 /// Supporting a custom point type might look like this:
 ///
 /// ```
-/// use rstared::rstar::Point;
+/// use rstared::Point;
 ///
 /// #[derive(Copy, Clone, PartialEq, Debug)]
 /// struct IntegerPoint

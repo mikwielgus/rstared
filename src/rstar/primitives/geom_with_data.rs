@@ -12,8 +12,8 @@ use crate::rstar::{envelope::Envelope, object::Distance};
 ///
 /// # Example
 /// ```
-/// use rstared::rstar::{RTree, PointDistance};
-/// use rstared::rstar::primitives::GeomWithData;
+/// use rstared::{RTree, PointDistance};
+/// use rstared::primitives::GeomWithData;
 ///
 /// type RestaurantLocation = GeomWithData<[f64; 2], &'static str>;
 ///

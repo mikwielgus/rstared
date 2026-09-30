@@ -5,7 +5,7 @@
 use std::collections::HashMap;
 
 use rstared::RTreed;
-use rstared::rstar::{AABB, primitives::Rectangle};
+use rstared::{AABB, primitives::Rectangle};
 
 fn main() {
     // A hashmap of 2D rectangles will be the underlying collection.
