@@ -6,7 +6,7 @@ use crate::rstar::{Point, RTreeObject};
 /// e.g. how they can be merged or intersected.
 /// This trait is not meant to be implemented by the user. Currently, only one implementation
 /// exists ([crate::rstar::AABB]) and should be used.
-pub trait Envelope: Clone + PartialEq + ::core::fmt::Debug {
+pub trait Envelope: Clone + PartialEq {
     /// The envelope's point type.
     type Point: Point;
 

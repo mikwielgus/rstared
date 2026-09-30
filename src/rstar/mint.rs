@@ -32,7 +32,7 @@
 
 use crate::rstar::{Point, RTreeNum};
 
-impl<T: RTreeNum + core::fmt::Debug> Point for mint::Point2<T> {
+impl<T: RTreeNum> Point for mint::Point2<T> {
     type Scalar = T;
 
     const DIMENSIONS: usize = 2;
@@ -61,7 +61,7 @@ impl<T: RTreeNum + core::fmt::Debug> Point for mint::Point2<T> {
     }
 }
 
-impl<T: RTreeNum + core::fmt::Debug> Point for mint::Point3<T> {
+impl<T: RTreeNum> Point for mint::Point3<T> {
     type Scalar = T;
 
     const DIMENSIONS: usize = 3;
