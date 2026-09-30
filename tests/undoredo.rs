@@ -12,7 +12,7 @@ use maplike::{
     ops::{Get, Insert, Remove},
 };
 use rstared::RTreed;
-use rstared::rstar::primitives::Rectangle;
+use rstared::primitives::Rectangle;
 use std::collections::BTreeMap;
 use undoredo::aliases::BTreeMapHalfDelta;
 use undoredo::{ApplyDelta, Delta, HistoryTree, Recorder, Snapshot, UndoRedo};

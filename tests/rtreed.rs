@@ -12,7 +12,7 @@ use maplike::{
 };
 use rand::RngExt;
 use rstared::RTreed;
-use rstared::rstar::{AABB, primitives::Rectangle};
+use rstared::{AABB, primitives::Rectangle};
 
 #[cfg(feature = "stable-vec")]
 #[test]

@@ -8,7 +8,7 @@ use crate::rstar::{Envelope, Point, RTree, RTreeObject};
 ///
 /// # Example
 /// ```
-/// use rstared::rstar::{RTreeParams, RTree, RStarInsertionStrategy};
+/// use rstared::{RTreeParams, RTree, RStarInsertionStrategy};
 ///
 /// // This example uses an rtree with larger internal nodes.
 /// struct LargeNodeParameters;

@@ -118,7 +118,7 @@ Following is a basic usage example on `Vec`
 Existing elements can be removed with `.swap_remove()`.
 
 ```rust
-use rstared::rstar::{AABB, primitives::Rectangle};
+use rstared::{AABB, primitives::Rectangle};
 use rstared::RTreed;
 
 fn main() {
@@ -217,7 +217,7 @@ Enable the `geo` feature so that [`geo-types`](https://docs.rs/geo-types)
 #[cfg(feature = "geo")]
 {
 use geo_types::{MultiPolygon, Point, Polygon, line_string};
-use rstared::rstar::AABB;
+use rstared::AABB;
 use rstared::RTreed;
 
 fn main() {

@@ -11,7 +11,7 @@
 //! [`mint`](https://crates.io/crates/mint) crate.
 //!
 //! ```
-//! use rstared::rstar::RTree;
+//! use rstared::RTree;
 //!
 //! let point1 = nalgebra::Point2::new(0.0, 0.0);
 //! let point2 = nalgebra::Point2::new(1.0, 1.0);

@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 
 use geo_types::{MultiPolygon, Point, Polygon, line_string};
+use rstared::AABB;
 use rstared::RTreed;
-use rstared::rstar::AABB;
 
 fn main() {
     let multipolygon: MultiPolygon<f64> = MultiPolygon::new(vec![]);

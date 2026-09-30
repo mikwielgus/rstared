@@ -30,7 +30,7 @@ pub(crate) type Distance<T: PointDistance> = <<T::Envelope as Envelope>::Point a
 ///
 /// # Example implementation
 /// ```
-/// use rstared::rstar::{RTreeObject, AABB};
+/// use rstared::{RTreeObject, AABB};
 ///
 /// struct Player
 /// {
@@ -49,7 +49,7 @@ pub(crate) type Distance<T: PointDistance> = <<T::Envelope as Envelope>::Point a
 ///     }
 /// }
 ///
-/// use rstared::rstar::RTree;
+/// use rstared::RTree;
 ///
 /// let mut tree = RTree::new();
 ///
@@ -100,7 +100,7 @@ pub trait RTreeObject {
 ///
 /// # Example
 /// ```
-/// use rstared::rstar::{RTreeObject, PointDistance, AABB};
+/// use rstared::{RTreeObject, PointDistance, AABB};
 ///
 /// struct Circle
 /// {

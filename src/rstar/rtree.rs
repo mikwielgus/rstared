@@ -63,7 +63,7 @@ where
 ///
 /// ## Example
 /// ```
-/// use rstared::rstar::RTree;
+/// use rstared::RTree;
 ///
 /// let mut tree = RTree::new();
 /// tree.insert([0.1, 0.0f32]);
@@ -150,7 +150,7 @@ where
 /// If a library defines a method that should be generic over the r-tree type signature, make
 /// sure to include both type parameters like this:
 /// ```
-/// # use rstared::rstar::{RTree,RTreeObject, RTreeParams};
+/// # use rstared::{RTree,RTreeObject, RTreeParams};
 /// pub fn generic_rtree_function<T, Params>(tree: &mut RTree<T, Params>)
 /// where
 ///   T: RTreeObject,
@@ -303,7 +303,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     ///
     /// let mut tree = RTree::new();
     /// assert_eq!(tree.size(), 0);
@@ -326,7 +326,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     /// let tree = RTree::bulk_load(vec![(0.0, 0.1), (0.3, 0.2), (0.4, 0.2)]);
     /// for point in tree.iter() {
     ///     println!("This tree contains point {:?}", point);
@@ -357,7 +357,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::{RTree, AABB};
+    /// use rstared::{RTree, AABB};
     /// let mut tree = RTree::bulk_load(vec![
     ///   [0.0, 0.0],
     ///   [0.0, 1.0],
@@ -441,8 +441,8 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::{RTree, AABB};
-    /// use rstared::rstar::primitives::Rectangle;
+    /// use rstared::{RTree, AABB};
+    /// use rstared::primitives::Rectangle;
     ///
     /// let left_piece = AABB::from_corners([0.0, 0.0], [0.4, 1.0]);
     /// let right_piece = AABB::from_corners([0.6, 0.0], [1.0, 1.0]);
@@ -567,8 +567,8 @@ where
     /// # Examples
     ///
     /// ```
-    /// use rstared::rstar::{RTree, RTreeNode, ParentNode};
-    /// use rstared::rstar::primitives::GeomWithData;
+    /// use rstared::{RTree, RTreeNode, ParentNode};
+    /// use rstared::primitives::GeomWithData;
     ///
     /// type PointWithLabel = GeomWithData<[f32; 2], String>;
     ///
@@ -611,7 +611,7 @@ where
     /// // Bottom-up traversal: Aggregate child envelopes into parents (post-order)
     /// // NB: this is a contrived example showing manual envelope aggregation
     /// fn aggregate_envelopes_bottom_up(tree: &RTree<PointWithLabel>) -> Vec<(String, f32, f32)> {
-    ///     use rstared::rstar::{Envelope, AABB, RTreeObject};
+    ///     use rstared::{Envelope, AABB, RTreeObject};
     ///     let mut results = Vec::new();
     ///     
     ///     // Returns the envelope computed from this node's children
@@ -809,8 +809,8 @@ where
     /// to determine if a tree element contains the given point.
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
-    /// use rstared::rstar::primitives::Rectangle;
+    /// use rstared::RTree;
+    /// use rstared::primitives::Rectangle;
     ///
     /// let tree = RTree::bulk_load(vec![
     ///   Rectangle::from_corners([0.0, 0.0], [2.0, 2.0]),
@@ -871,8 +871,8 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
-    /// use rstared::rstar::primitives::Rectangle;
+    /// use rstared::RTree;
+    /// use rstared::primitives::Rectangle;
     ///
     /// let mut tree = RTree::bulk_load(vec![
     ///   Rectangle::from_corners([0.0, 0.0], [2.0, 2.0]),
@@ -902,7 +902,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     ///
     /// let mut tree = RTree::new();
     /// assert!(!tree.contains(&[0.0, 2.0]));
@@ -923,7 +923,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     ///
     /// let mut tree = RTree::new();
     /// tree.insert([0.0, 2.0]);
@@ -951,7 +951,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     /// let tree = RTree::bulk_load(vec![
     ///   [0.0, 0.0],
     ///   [0.0, 1.0],
@@ -971,7 +971,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     /// let tree = RTree::bulk_load(vec![
     ///   [0.0, 0.0],
     ///   [0.0, 1.0],
@@ -1006,7 +1006,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     /// let tree = RTree::bulk_load(vec![
     ///   [0.0, 0.0],
     ///   [0.0, 1.0],
@@ -1038,7 +1038,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     /// let tree = RTree::bulk_load(vec![
     ///   [0.0, 0.0],
     ///   [0.0, 1.0],
@@ -1104,7 +1104,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     /// let tree = RTree::bulk_load(vec![
     ///   [0.0, 0.0],
     ///   [0.0, 1.0],
@@ -1150,7 +1150,7 @@ where
     ///
     /// # Example
     /// ```
-    /// use rstared::rstar::RTree;
+    /// use rstared::RTree;
     /// let mut tree = RTree::bulk_load(vec![
     ///   [0.0, 0.0],
     ///   [0.0, 1.0],
