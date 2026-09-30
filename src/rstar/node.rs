@@ -141,7 +141,7 @@ where
                 }
             }
         }
-        assert_eq!(self.envelope, envelope);
+        assert!(self.envelope == envelope);
     }
 }
 

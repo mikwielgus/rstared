@@ -71,7 +71,7 @@ impl<S> RTreeNum for S where S: ExtendedBounds + Pofield + Clone {}
 ///   }
 /// }
 /// ```
-pub trait Point: Clone + PartialEq + core::fmt::Debug {
+pub trait Point: Clone + PartialEq {
     /// The number type used by this point type.
     type Scalar: RTreeNum;
 
@@ -202,7 +202,7 @@ where
 
 impl<S, const N: usize> Point for [S; N]
 where
-    S: RTreeNum + core::fmt::Debug,
+    S: RTreeNum,
 {
     type Scalar = S;
 
@@ -246,7 +246,7 @@ macro_rules! impl_point_for_tuple {
     ($($index:expr => $name:ident),+) => {
         impl<S> Point for ($(fixed_type!($index, S),)+)
         where
-            S: RTreeNum + core::fmt::Debug
+            S: RTreeNum
         {
             type Scalar = S;
 
