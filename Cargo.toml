@@ -35,7 +35,7 @@ undoredo = ["dep:undoredo"]
 
 [dependencies]
 heapless = { version = "0.9", default-features = false }
-maplike = { version = "0.15", features = ["alloc"], default-features = false }
+maplike = { version = "0.16", features = ["alloc"], default-features = false }
 numlike = { version = "0.6", default-features = false, features = ["libm"] }
 smallvec = "1.6"
 geo-types = { version = "0.7", optional = true, default-features = false }
