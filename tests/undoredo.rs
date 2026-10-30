@@ -15,7 +15,8 @@ use rstared::RTreed;
 use rstared::primitives::Rectangle;
 use std::collections::BTreeMap;
 use undoredo::aliases::BTreeMapHalfDelta;
-use undoredo::{ApplyDelta, Delta, HistoryTree, Recorder, Snapshot, UndoRedo};
+use undoredo::tree::EditTree;
+use undoredo::{ApplyDelta, Delta, Recorder, Snapshot, UndoRedo};
 
 impl FromUsize for (i32, i32) {
     fn from_usize(u: usize) -> (i32, i32) {
@@ -142,28 +143,28 @@ fn test_snapshot_undo_redo<
 }
 
 #[test]
-fn test_history_tree_command_checkout() {
-    let mut history_tree = HistoryTree::<(), u8>::new();
+fn test_edit_tree_command_checkout() {
+    let mut edit_tree = EditTree::<(), u8>::new();
     let mut state = ();
 
-    history_tree.cmd_commit(1, &mut state);
-    history_tree.cmd_commit(3, &mut state);
-    let left_leaf = history_tree.curr_node();
+    edit_tree.cmd_commit(1, &mut state);
+    edit_tree.cmd_commit(3, &mut state);
+    let left_leaf = edit_tree.curr_node();
 
-    assert_eq!(history_tree.undo(&mut state), Some(3));
-    assert_eq!(history_tree.undo(&mut state), Some(1));
+    assert_eq!(edit_tree.undo(&mut state), Some(3));
+    assert_eq!(edit_tree.undo(&mut state), Some(1));
 
-    history_tree.cmd_commit(2, &mut state);
-    history_tree.cmd_commit(4, &mut state);
-    let right_leaf = history_tree.curr_node();
+    edit_tree.cmd_commit(2, &mut state);
+    edit_tree.cmd_commit(4, &mut state);
+    let right_leaf = edit_tree.curr_node();
 
-    assert_eq!(history_tree.checkout(&mut state, left_leaf), vec![1, 3]);
-    assert_eq!(history_tree.curr_node(), left_leaf);
+    assert_eq!(edit_tree.checkout(&mut state, left_leaf), vec![1, 3]);
+    assert_eq!(edit_tree.curr_node(), left_leaf);
 
-    assert_eq!(history_tree.checkout(&mut state, right_leaf), vec![2, 4]);
-    assert_eq!(history_tree.curr_node(), right_leaf);
+    assert_eq!(edit_tree.checkout(&mut state, right_leaf), vec![2, 4]);
+    assert_eq!(edit_tree.curr_node(), right_leaf);
 
     // Checkouting to the same node again results in no commands emitted.
-    assert_eq!(history_tree.checkout(&mut state, right_leaf), vec![]);
-    assert_eq!(history_tree.curr_node(), right_leaf);
+    assert_eq!(edit_tree.checkout(&mut state, right_leaf), vec![]);
+    assert_eq!(edit_tree.curr_node(), right_leaf);
 }

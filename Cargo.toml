@@ -35,13 +35,13 @@ undoredo = ["dep:undoredo"]
 
 [dependencies]
 heapless = { version = "0.9", default-features = false }
-maplike = { version = "0.15", features = ["alloc"], default-features = false }
+maplike = { version = "0.16", features = ["alloc"], default-features = false }
 numlike = { version = "0.6", default-features = false, features = ["libm"] }
 smallvec = "1.6"
 geo-types = { version = "0.7", optional = true, default-features = false }
 mint = { version = "0.5.9", optional = true }
 serde = { version = "1.0", optional = true, default-features = false, features = ["alloc", "derive"] }
-undoredo = { version = "0.15", default-features = false, optional = true }
+undoredo = { version = "0.16", default-features = false, optional = true }
 
 [dev-dependencies]
 approx = "0.5"
