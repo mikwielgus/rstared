@@ -160,7 +160,7 @@ where
         None | Some(RTreeNode::Leaf(_)) => return usize::MAX,
     };
 
-    let zero: Distance<T> = Zero::ZERO;
+    let zero: Distance<T> = Zero::zero();
     let insertion_envelope = to_insert.envelope();
     let mut inclusion_count = 0;
     let mut min_area = Distance::<T>::MAX_EXTENDED;
@@ -250,7 +250,7 @@ where
     Params: RTreeParams,
 {
     let axis = get_split_axis::<_, Params>(node);
-    let zero = Distance::<T>::ZERO;
+    let zero = Distance::<T>::zero();
     debug_assert!(node.children.len() >= 2);
     // Sort along axis
     T::Envelope::sort_envelopes(axis, &mut node.children);

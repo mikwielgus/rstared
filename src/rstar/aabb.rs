@@ -114,7 +114,7 @@ where
     /// Returns the squared distance to the AABB's [min_point](AABB::min_point)
     pub fn distance_2(&self, point: &P) -> P::Scalar {
         if self.contains_point(point) {
-            Zero::ZERO
+            Zero::zero()
         } else {
             self.min_point(point).sub(point).length_2()
         }
@@ -168,8 +168,8 @@ where
     }
 
     fn area(&self) -> P::Scalar {
-        let zero = P::Scalar::ZERO;
-        let one = P::Scalar::ONE;
+        let zero = P::Scalar::zero();
+        let one = P::Scalar::one();
         let diag = self.upper.sub(&self.lower);
         diag.fold(one, |acc, cur| max_inline(cur, zero.clone()) * acc)
     }
@@ -181,7 +181,7 @@ where
     fn min_max_dist_2(&self, point: &P) -> <P as Point>::Scalar {
         let l = self.lower.sub(point);
         let u = self.upper.sub(point);
-        let mut max_diff = (Zero::ZERO, Zero::ZERO, 0); // diff, min, index
+        let mut max_diff = (Zero::zero(), Zero::zero(), 0); // diff, min, index
         let mut result = P::new();
 
         for i in 0..P::DIMENSIONS {
@@ -202,11 +202,11 @@ where
         }
 
         *result.nth_mut(max_diff.2) = max_diff.1;
-        result.fold(Zero::ZERO, |acc, curr| acc + curr)
+        result.fold(Zero::zero(), |acc, curr| acc + curr)
     }
 
     fn center(&self) -> Self::Point {
-        let one = <Self::Point as Point>::Scalar::ONE;
+        let one = <Self::Point as Point>::Scalar::one();
         let two = one.clone() + one;
         self.lower
             .component_wise(&self.upper, |x, y| (x + y) / two.clone())
@@ -222,7 +222,7 @@ where
 
     fn perimeter_value(&self) -> P::Scalar {
         let diag = self.upper.sub(&self.lower);
-        let zero = P::Scalar::ZERO;
+        let zero = P::Scalar::zero();
         max_inline(diag.fold(zero.clone(), |acc, value| acc + value), zero)
     }
 

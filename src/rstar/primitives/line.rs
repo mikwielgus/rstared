@@ -87,9 +87,9 @@ where
         let (p1, p2) = (self.from.clone(), self.to.clone());
         let dir = p2.sub(&p1);
         let s = self.project_point(query_point);
-        if P::Scalar::ZERO < s && s < One::ONE {
+        if P::Scalar::zero() < s && s < One::one() {
             p1.add(&dir.mul(s))
-        } else if s <= P::Scalar::ZERO {
+        } else if s <= P::Scalar::zero() {
             p1
         } else {
             p2

@@ -122,7 +122,7 @@ where
 {
     fn distance_2(&self, point: &Point<T>) -> T {
         if self.0.is_empty() {
-            return T::ZERO;
+            return <T as numlike::elem::Zero>::zero();
         }
 
         self.lines()

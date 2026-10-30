@@ -100,7 +100,7 @@ impl<T> PointExt for T where T: Point {}
 pub trait PointExt: Point {
     /// Returns a new Point with all components set to zero.
     fn new() -> Self {
-        Self::from_value(Self::Scalar::ZERO)
+        Self::from_value(Self::Scalar::zero())
     }
 
     /// Applies `f` to each pair of components of `self` and `other`.
@@ -124,7 +124,7 @@ pub trait PointExt: Point {
     /// Returns the dot product of `self` and `rhs`.
     fn dot(&self, rhs: &Self) -> Self::Scalar {
         self.component_wise(rhs, |l, r| l * r)
-            .fold(Self::Scalar::ZERO, |acc, val| acc + val)
+            .fold(Self::Scalar::zero(), |acc, val| acc + val)
     }
 
     /// Folds (aka reduces or injects) the Point component wise using `f` and returns the result.
@@ -155,7 +155,7 @@ pub trait PointExt: Point {
 
     /// Returns the squared length of this Point as if it was a vector.
     fn length_2(&self) -> Self::Scalar {
-        self.fold(Self::Scalar::ZERO, |acc, cur| cur.clone() * cur + acc)
+        self.fold(Self::Scalar::zero(), |acc, cur| cur.clone() * cur + acc)
     }
 
     /// Substracts `other` from `self` component wise.
